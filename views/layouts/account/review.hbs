@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {{>import/head}}
+</head>
+
+<body>
+    {{>import/navbar}}
+    {{!-- Ảnh, tên, giá, tg kết thúc --}}
+    <div class="container shadow p-3 mb-5 bg-white rounded">
+        <h1 class="text-center">Review List</h1>
+        {{#if emptyList}}
+        <div>You don't have any reviews</div>
+        {{else}}
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr class="d-flex">
+                    <th class="col-1">OrderID</th>
+                    <th class="col-3">Product Name</th>
+                    <th class="col-3">Order Date</th>
+                    <th class="col-3">Review</th>
+                    <th class="col-2">User review</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each reviews}}
+                <div>
+                    <tr class="d-flex">
+                        <td class="col-1">
+                            {{OrderID}}
+                        </td>
+                        <td class="col-3">
+                            {{ProName}}
+                        </td>
+                        <td class="col-3">
+                            {{OrderDate}}
+                        </td>
+                        <td class="col-3 row">
+                            <div class="col-4">Rating: </div>
+                            <div class="col-6 text-success">{{Review}}/10</strong>
+                        </td>
+                        <td class="col-2">
+                            {{f_username}}
+                        </td>
+                    </tr>
+                </div>
+                {{/each}}
+            </tbody>
+        </table>
+
+        {{/if}}
+    </div>
+
+
+    {{> import/b4_script}}
+</body>
+
+</html>

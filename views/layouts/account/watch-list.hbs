@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {{>import/head}}
+</head>
+
+<body>
+    {{>import/navbar}}
+    <h1 class="text-center">Watch-list</h1>
+    {{!-- Ảnh, tên, giá, tg kết thúc --}}
+    <div class="container shadow p-3 mb-5 bg-white rounded">
+        {{#if emptyList}}
+        <div>Your Watch-list is Empty</div>
+        {{else}}
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr class="d-flex">
+                    <th class="col-2">Product</th>
+                    <th class="col-5">Product Name</th>
+                    <th class="col-2">End Time</th>
+                    <th class="col-2">Current Price</th>
+                    <th class="col-1">Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each listofPro}}
+
+                <div>
+                    <tr class="d-flex">
+                        <td class="col-2"><a class="thumbnail" href="/product/{{ProID}}"> <img class="media-object"
+                                    src="./products/{{ProID}}/main.jpg" style="width: 100px; height: 100px;"></a></td>
+                        <td class="col-5">
+                            <div class="media-body">
+                                <h4 class="media-heading"><a href="/product/{{ProID}}">{{ProName}}</a></h4>
+                                <h6>Rating: <span class="text-success"><strong>{{Rating}}/10</strong></span></h6>
+                            </div>
+                        </td>
+                        <td class="col-2"><i>{{end_time}}</i></td>
+                        <td class="col-2"><strong>{{Price}} VND</strong></td>
+                        <td class="col-1">
+                            <form method="POST" id="hiddenForm{{ProID}}">
+                                <input type="hidden" value="{{ProID}}" id="proID" name="proID_">
+                                    
+                                </form>
+                                <button type="button" class="btn btn-danger" onclick="deleteWatchList({{ProID}});">
+                                    <i class="fad fa-trash-alt"></i>
+                                </button>
+                        </td>
+                                
+                    </tr>
+                </div>
+                {{/each}}
+            </tbody>
+        </table>
+
+        {{/if}}
+    </div>
+    <script>
+        function deleteWatchList(ProID)
+        {
+            let form = `#hiddenForm${ProID}`;
+            console.log("hi");
+            $(form).attr('action', '/account/delete');
+			$(form).submit();
+        }
+    </script>
+
+    {{> import/b4_script}}
+    <script src="./assets/js/watch-list.js"></script>
+</body>
+
+</html>

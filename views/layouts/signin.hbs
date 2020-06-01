@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="./assets/css/signin.css">
+</head>
+
+<body>
+  <form class="signin_box" action="signin" method="POST">
+    <h1>Login</h1>
+    <input type="text" name="username" id="username" placeholder="Username" required>
+    <input type="password" name="password" id="password" placeholder="Password" required>
+    <input type="submit" class="btn" value="Login">
+    <a href="signup"><button type="button" class="btn" id="register" />Register</button></a>
+  </form>
+  {{> import/b4_script}}
+</body>
+
+</html>

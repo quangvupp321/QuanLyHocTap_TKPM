@@ -1,0 +1,47 @@
+.breadcrumb{
+    padding:11.25px 15px;
+}
+.category-item{
+    padding: 5px;
+    padding-right: 2rem;
+}
+.category-item .category-link{
+    color: var(--textcolor);
+    display: block;
+    padding: 5px 0;
+}
+.category-item .active{
+    border-bottom: 1px solid black;
+    transition: all 0.3s ease-in;
+}
+.category-link:hover{
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px solid black;
+    transition: all 0.3s ease-out;
+}
+.card-img-top{
+    height:250px;
+    
+}
+.cup{
+    position: relative;
+}
+.bidderdiv{
+    position: absolute;
+}
+.card .card-title {
+    overflow: hidden;
+    max-height: 1.2rem;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.op,.card-text{
+    font-size: 1rem;
+}
+.cp{
+    font-size: 1rem;
+}

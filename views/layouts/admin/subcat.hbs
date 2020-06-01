@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {{>import/head}}
+</head>
+
+<body>
+    {{>import/navbar}}
+    {{!-- Ảnh, tên, giá, tg kết thúc --}}
+    <h1 class="container text-center mt-5">Customize</h1>
+    <div class="container shadow p-3 bg-white rounded my-3">
+        <h1 class="text-center">Subategory</h1>
+        {{#if emptyList}}
+        <div>You don't have any products</div>
+        {{else}}
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr class="d-flex">
+                    <th class="col-2">SubcategoryID</th>
+                    <th class="col-2">CategoryID</th>
+                    <th class="col-5">Subcategory Name</th>
+                    <th class="col-3">Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each subcategories}}
+                <div>
+                    <tr class="d-flex">
+                        <td class="col-2">{{SubCatID}}</td>
+                        <td class="col-2">{{categoryID}}</td>
+                        <form method="POST" action="/admin/subcat/edit"id="hiddenForm{{SubCatID}}">
+                        <td class="col-5">
+                                <div class="form-group">
+                                    <div class="input-wrap">
+                                        <input type="text" name="subcategoryname" class="form-control" id="subcategoryname"
+                                            value="{{SubCateName}}" placeholder="SubcategoryName">
+                                    </div>
+                                </div>
+                        </td>
+                        <td class="col-3">
+                                <input type="hidden" name="catid" id="catid" value="{{categoryID}}">
+                                <input type="hidden" name="subcatid" id="subcatid" value="{{SubCatID}}">
+                                <a href="#">
+                                    <button type="submit" class="btn btn-warning">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </a>
+                                <button type="button" class="btn btn-danger" onclick="deleteSubCate({{SubCatID}})">
+                                    <i class="fad fa-trash-alt"></i>
+                                </button>
+                            
+                        </td>
+                        </form>
+                    </tr>
+                </div>
+                {{/each}}
+                <div>
+                    <tr class="d-flex">
+                        <form method="POST" action="/admin/subcat/add">
+                        <td class="col-2"></td>
+                        <td class="col-2">
+                            <div class="form-group">
+                                <div class="input-wrap">
+                                    <input type="text" name="categoryid" class="form-control" id="categoryid"
+                                        value="" placeholder="CategoryID">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="col-5">
+                            <div class="form-group">
+                                <div class="input-wrap">
+                                    <input type="text" name="subcategoryname" class="form-control" id="subcategoryname"
+                                        value="" placeholder="SubcategoryName">
+                                    <span class="help-block"></span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="col-3">
+                            
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                </div>
+            </tbody>
+        </table>
+        {{/if}}
+        <hr>
+    </div>
+    <script>
+        function deleteSubCate(scatID)
+        {
+            let form = `#hiddenForm${scatID}`;
+            $(form).attr('action', '/admin/subcat/delete');
+            $(form).submit();
+        }
+    </script>
+    {{> import/b4_script}}
+    <script src="./assets/js/watch-list.js"></script>
+</body>
+
+</html>

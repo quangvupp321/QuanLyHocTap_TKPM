@@ -1,0 +1,246 @@
+@import url(_var.css);
+
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font_monterrat);
+}
+
+*,
+::after,
+::before {
+    box-sizing: border-box;
+}
+
+/* logo */
+.logo {
+    background-color: var(--bgcolor);
+    padding: 0.25rem;
+}
+
+.logo a {
+    color: var(--textcolor);
+}
+
+.logo a:hover {
+    text-decoration: none;
+}
+
+.logo-title,
+.logo-detail {
+    text-transform: uppercase;
+}
+
+.logo-title {
+    display: inline-block;
+    font-size: 48px;
+}
+
+.logo-detail {
+    display: inline-block;
+    letter-spacing: 0.25rem;
+    border-bottom: 1px solid var(--textcolor);
+}
+
+
+/* header */
+.navbar {
+    font-weight: 600;
+    text-transform: capitalize;
+    background-color: var(--bgcolor);
+    padding: 0.5rem 0rem !important;
+}
+
+.shadow-sm {
+    box-shadow: 0 .125rem 0 rgba(0, 0, 0, .075);
+}
+
+.bd-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header .navbar .navbar-brand {
+    font-size: 30px;
+}
+
+header .navbar .navbar-nav .nav-item a {
+    color: var(--textcolor);
+    margin-right: 4rem;
+    letter-spacing: 0.5px;
+}
+
+header .navbar .navbar-nav .nav-item a:hover {
+    text-decoration: none;
+    padding-bottom: 6.5px;
+    color: var(--hovercolor);
+    border-bottom: 1.5px solid var(--hovercolor);
+    transition: all 0.2s ease-out;
+}
+
+.dropdown-item:active {
+    background-color: var(--light);
+}
+
+header .navbar .signiu {
+    text-transform: capitalize;
+    letter-spacing: 0.5px;
+    padding: 8px;
+    color: var(--textcolor);
+}
+
+header .navbar .signiu:hover {
+    position: relative;
+    text-decoration: none;
+    color: var(--hovercolor);
+    border-bottom: 1.5px solid var(--hovercolor);
+    transition: all 0.2s ease-out;
+}
+
+.account {
+    position: relative;
+    justify-self: flex-end;
+    z-index: 1;
+}
+
+.account img {
+    height: 100%;
+    width: auto;
+    height: 30px;
+}
+
+.cart img {
+    max-width: 30px;
+    display: inline-block;
+    margin-right: 13px;
+}
+
+.btn .badge {
+    top: 12px;
+    left: 18px;
+}
+
+.badge {
+    white-space: normal;
+    border: 1px solid #7e57c2;
+    border-radius: 50%;
+}
+
+/* header info */
+
+.header-info {
+    background: #7e57c2;
+    overflow: hidden;
+    padding: 10px 45px;
+}
+
+.header-info .header-item img {
+    padding-top: 0.25rem;
+    max-width: 30px;
+    display: inline-block;
+    margin-right: 13px;
+}
+
+.header-info .header-item {
+    overflow: hidden;
+}
+
+.header-info .header-item p {
+    display: inline-block;
+    line-height: 1;
+    font-size: 14px;
+    color: #fff;
+    font-weight: 500;
+    margin-bottom: 0;
+    position: relative;
+    top: 3px;
+}
+
+/* search */
+
+
+/* card */
+
+.card {
+    padding: 1rem 0;
+    max-height: 700px;
+    border: none;
+}
+
+.card .card-body {
+    padding: 0;
+    overflow: hidden;
+}
+h6{
+    margin-bottom: 0px !important;
+}
+.datepost{
+    opacity: 0.9;
+}
+.card .card-img-top {
+    object-fit: cover;
+    height: 300px;
+}
+
+.card .card-title {
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+.card-view{
+    position: relative;
+}
+.timedown{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+.timedown .date{
+    color:red;
+    font-size:1.5rem;
+    letter-spacing: 1px;
+    font-weight: 500;
+}
+.cp{
+    color:red;
+}
+.opct-90{
+    opacity: 0.9;
+}
+/* banner */
+.carousel-inner img {
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+    object-fit: cover;
+}
+
+.h4 {
+    margin-bottom: 0.25rem;
+}
+
+.nav-brand {
+    display: none;
+    color: var(--hovercolor);
+}
+
+.carousel-item .carousel-caption {
+    display: none;
+    position: absolute;
+    top: 40%;
+    translate: (-50%, -50%);
+}
+
+.learnmore {
+    padding: 0 5px;
+    font-size: 48px;
+    color: var(--bgcolor);
+    border-radius: 10px;
+    border: 1px solid var(--bgcolor);
+    transition: all 0.2s ease-in;
+}
+
+

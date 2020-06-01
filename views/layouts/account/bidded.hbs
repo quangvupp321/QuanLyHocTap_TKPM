@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {{>import/head}}
+</head>
+
+<body>
+    {{>import/navbar}}
+    <h1 class="text-center">Bidding list</h1>
+    {{!-- Ảnh, tên, giá, tg kết thúc --}}
+    <div class="container shadow p-3 mb-5 bg-white rounded">
+        {{#if emptyList}}
+        <div>Your Bidding-list is Empty</div>
+        {{else}}
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr class="d-flex">
+                    <th class="col-2">Product</th>
+                    <th class="col-5">Product Name</th>
+                    <th class="col-2">End Time</th>
+                    <th class="col-2">Order Price</th>
+                    <th class="col-1">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each listofPro}}
+
+                <form id="#frmHidden" method="POST">
+                    <tr class="d-flex">
+                        <td class="col-2"><a class="thumbnail" href="/product/{{ProID}}"> <img class="media-object"
+                                    src="./products/{{ProID}}/main.jpg" style="width: 100px; height: 100px;"></a></td>
+                        <td class="col-5">
+                            <div class="media-body">
+                                <h4 class="media-heading"><a href="/product/{{ProID}}">{{ProName}}</a></h4>
+                                <h6>Rating: <span class="text-success"><strong>{{Rating}}/10</strong></span></h6>
+                                <h6>Top bidder: <span {{#if winning}}
+                                    class="text-success"
+                                    {{else}}
+                                    class="text-warning"
+                                {{/if}}><strong>{{topBidder.f_username}}</strong></span></h6>
+                                {{#if highest}}
+                                <h5>YOU get the highest price</h5>
+                                {{/if}}
+                            </div>
+                        </td>
+                        <td class="col-2"><i>{{end_time}}</i></td>
+                        <td class="col-2"><strong>{{priceOrder}} VND</strong></td>
+                        <td class="col-1">
+                            {{#if winning}}
+                                <div class="text-success">
+                                <i class="far fa-check fa-3x"></i>
+                                </div>
+                            {{else}}
+                                <div class="text-danger">
+                                <i class="far fa-times fa-3x"></i>
+                                </div>
+                            {{/if}}
+
+                        </td>
+                    </tr>
+                </form>
+                {{/each}}
+            </tbody>
+        </table>
+
+        {{/if}}
+    </div>
+
+
+    {{> import/b4_script}}
+    <script src="./assets/js/bidded.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  {{>import/head}}
+</head>
+
+<body>
+  <!-- navbar -->
+  {{>import/navbar}}
+
+  <!-- sale -->
+  <div class="header-info">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="header-item">
+            <img src="images/shiptruck.png" alt="">
+            <p>Free shipping on orders over $1000 in VN</p>
+          </div>
+        </div>
+        <div class="col-md-4 text-left text-lg-center">
+          <div class="header-item">
+            <img src="images/goldmedal.png" alt="">
+            <p>20% Golden Member Discount</p>
+          </div>
+        </div>
+        <div class="col-md-4 text-left text-xl-right">
+          <div class="header-item">
+            <img src="images/sale.png" alt="">
+            <p>30% off on Vertu brand. Use code: 30OFF</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- banner -->
+  {{>import/banner}}
+  <!-- notice -->
+  <div class="container">
+    <!-- sản phẩm gần kết thúc -->
+    <div class="endding-product mt-4">
+      <div class="row">
+        <div class="col">
+          <div class="h2">Running out</div>
+        </div>
+      </div>
+      <div class="row">
+        {{#each nearEndPro}}
+          {{> import/product_view}}
+        {{/each}}
+      </div>
+    </div>
+    <!-- Có nhiều lượt ra giá nhất-->
+    <div class="endding-product mt-4">
+      <div class="row">
+        <div class="col">
+          <div class="h2">The Most Bidding</div>
+        </div>
+      </div>
+      <div class="row">
+        {{#each mostBiddedPro}}
+          {{> import/product_view}}
+        {{/each}}
+      </div>
+    </div>
+    <!-- đắt nhất -->
+    <div class="endding-product mt-4">
+      <div class="row">
+        <div class="col">
+          <div class="h2">The Most Expensive Product</div>
+        </div>
+      </div>
+      <div class="row">
+        {{#each mostExpPro}}
+          {{> import/product_view}}
+        {{/each}}
+      </div>
+    </div>
+    <!-- fearture -->
+    <div class="fearture-dad mt-4 mb-2">
+      <div class="row">
+        <div class="col">
+          <div class="h2">Fearture</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="fearture-item">
+            <img src="images/phone.jpg" alt="phone" class="">
+            <div class="overlay pt-15">
+              <h2>Phone</h2>
+              <p><a href="">Start bidding</a></p>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col">
+              <div class="fearture-item ">
+                <img src="images/laptop.jpg" alt="phone" class="">
+                <div class="overlay pt-15">
+                  <h2>Laptop</h2>
+                  <p><a href="">Start bidding</a></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="fearture-item ">
+                <img src="images/other.png" alt="other">
+                <div class="overlay">
+                  <h2>More</h2>
+                  <p><a href="">Click here</a></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="row mt-4">
+        <div class="col-lg-12">
+          <div class="fearture-item">
+            <img src="images/desktop.jpg" alt="phone" class="">
+            <div class="overlay pt-15">
+              <h2>Desktop & PC</h2>
+              <p><a href="">Start bidding</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{> import/back-to-top-button}}
+
+
+  <!-- script -->
+  {{> import/b4_script}}
+</body>
+
+</html>
