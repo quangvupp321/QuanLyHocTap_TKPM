@@ -1,92 +1,12 @@
-<header class="bd-navbar">
-    <div class="container-full-fluid">
-        <div class=" logo text-center " id="logo">
-            <a href="/" class="logo-title">online auction</a>
-            <div class="detail">
-                <a href="/" class="logo-detail">the best website for online auction</a>
-            </div>
-        </div>
-        <div class="container-full-fluid bg-white shadow-sm navnav" id="bar">
-            <div class="container" id="navv">
-                <nav class="navbar navbar-expand-lg navbar-light bg-white " id="nav">
-                    <!-- img logo -->
-                    <div class="nav-brand">
-                        <div class="h4">Online Auction</div>
-                    </div>
-                    <button class="navbar-toggler" data-toggle="collapse" data-target="#navmenu">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    <span class="collapse navbar-collapse flex-column ml-lg-0 ml-3" id="navbarCollapse">
-                        <ul class="navbar-nav">
-                            {{!-- Search --}}
-                            <form class="d-inline" method="GET" action="/search?search=">
-                                <div class="input-group">
-                                    <input class="form-control" type="text" placeholder="Search" aria-label="Search"
-                                        style="width: 450px;" name="search">
-                                    <button class="btn" type="submit" style="background-color: #7e57c2;">
-                                        <i class="far fa-search" style="color:white"></i>
-                                    </button>
-                                </div>
-                            </form>
-                            {{!-- EndSearch --}}
-                            <li class="nav-item ml-3">
-                                <a class="account nav-link signiu" href="/account/profile">
-                                    <i class="fas fa-user-circle fa-lg"></i>
-                                    account
-                                </a>
-                            </li>
-                             <li class="nav-item">
-                                <a href="/account/won" class="nav-link">
-                                    <i class="far fa-trophy fa-lg"></i>
-                                    won-list
-                                </a>
-                            </li>
-                        </ul>
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a href="/" class="nav-link" active="true"><i class="fas fa-home"></i>
-                                    Home</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="/category" id="navbarDropdown" role="button"
-                                    aria-haspopup="true" aria-expanded="false">
-                                    <i class="far fa-line-columns"></i>
-                                    Category
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    {{#each sideCategory }}
-                                        <a class="dropdown-item" href="/category/{{ CatID }}">{{ CatName }}</a>
-                                    {{/each}}                              
-                                </div>     
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/account/watch-list">
-                                    <i class="far fa-heart"></i>
-                                    watch list
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/contact">
-                                    <i class="far fa-phone"></i>
-                                    Contact
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/about">
-                                    <i class="far fa-info-circle"></i>
-                                    About
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/account/bidded" class="nav-link">
-                                    <i class="far fa-shopping-cart fa-lg"></i>
-                                    bidding-list
-                                </a>
-                            </li>
-                        </ul>
-                        </divc>
-                </nav>
-            </div>
-        </div>
-</header>
+<!-- Sidebar -->
+<div class="bg-light border-right" id="sidebar-wrapper">
+    <div class="sidebar-heading">Quản Lý Học Tập</div>
+    <div class="list-group list-group-flush">
+        <a href="#" class="list-group-item list-group-item-action bg-light">Quản lý học phần</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Quản lý điểm học tập</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Chương trình đào tạo</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Quản lý Deadline</a>
+        <a href="/account/profile" class="list-group-item list-group-item-action bg-light">Setting</a>
+    </div>
+</div>
+<!-- /#sidebar-wrapper -->

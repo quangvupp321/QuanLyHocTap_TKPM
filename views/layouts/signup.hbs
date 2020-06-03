@@ -1,50 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    {{>import/head}}
-    
+  <title> {{title}} </title>
+  <link rel="stylesheet" href="./assets/css/signin.css">
 </head>
+
 <body>
-    {{>import/navbar}}
-    <h1 class="h1 mb-3">Sign up</h1>
-
-    <div class="container">
-        <div class="row justify-content-md-center">
-          <div class="col-md-6 col-md-auto login-box">
-            <form onsubmit="return checkPassword(this)" method="POST" action="signup">
-              <div class="form-row">
-                 <div class="col-md-12">
-                  <input type="text" name="fullname" id="fullname" class="form-control form-control-lg flat-input" placeholder="Full Name"
-                </div>
-                <div class="col-md-12">
-                  <input type="text" name="username" id="username" class="form-control form-control-lg flat-input" placeholder="User Name">
-                </div>
-                <div class="col-md-12">
-                  <input type="email" name="email" id="email" class="form-control form-control-lg flat-input" placeholder="Email">
-                </div>
-                <div class="col-md-12">
-                  <input type="password" name="password" id="password" class="form-control form-control-lg flat-input" placeholder="Type password">
-                </div>
-
-                <div class="col-md-12">
-                  <input type="password" name="valid_password" id="valid_password" class="form-control form-control-lg flat-input" placeholder="Type password again">
-                </div>
-                <div class="col-md-12">
-                  <input type="text" name="birth" onfocus="(this.type='date')" onblur="(this.type='text')" class="textbox-n form-control form-control-lg flat-input" placeholder="Birthday">
-                </div>
-                <div class="col-md-12">
-                  <input type="text" name="address" id="address" class="form-control form-control-lg flat-input" placeholder="Address">
-                </div>
-                <div class="mx-auto">
-                  <p class="text-danger">{{ messenge }}</p>
-                    {{{captcha}}}
-                </div>     
-                <button type="submit" class="btn btn-lg btn-block btn-login">Register</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-      {{> import/b4_script}}
+  <form class="signin_box" onsubmit="return checkPassword(this)" method="POST" action="signup">
+    <h1>Signup</h1>
+    <input type="text" name="fullname" id="fullname" placeholder="Fullname" required>
+    <input type="text" name="username" id="username" placeholder="MSSV" required>
+    <input type="password" name="password" id="password" placeholder="Type Password" required>
+    <input type="password" name="valid_password" id="valid_password" placeholder="Type Password again" required>
+    <input type="text" name="birth" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Birthday"
+      required>
+    <input type="submit" class="btn" value="Submit">
+  </form>
+  {{> import/b4_script}}
 </body>
+
 </html>

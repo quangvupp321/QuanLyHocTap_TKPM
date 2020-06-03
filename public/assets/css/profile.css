@@ -1,0 +1,106 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: #34495e;
+}
+
+.profile_box {
+    width: 500px;
+    padding: 40px;
+    margin: 0 auto;
+    background: #191919;
+    text-align: center;
+}
+
+.profile_box h1 {
+    color: white;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.profile_box input[type="text"],
+.profile_box input[type="password"] {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 5px auto 20px auto;
+    text-align: center;
+    border: 2px solid #3498db;
+    padding: 14px 10px;
+    width: 200px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+}
+
+.profile_box input[type="text"]:focus,
+.profile_box input[type="password"]:focus {
+    width: 280px;
+    border-color: #2ecc71;
+}
+
+.profile_box input[type="submit"] {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #2ecc71;
+    padding: 14px 40px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+    cursor: pointer;
+}
+
+.profile_box input[type="submit"]:hover {
+    background: #2ecc71;
+}
+
+.profile_box .control-label {
+    border: 0;
+    background: none;
+    display: block;
+    text-align: center;
+    outline: none;
+    color: white;
+}
+
+.profile_box .input-wrap[id="birthday_border"] {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 5px auto 20px auto;
+    text-align: center;
+    border: 2px solid #3498db;
+    padding: 14px 10px;
+    width: 200px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+}
+
+button[id="signout"] {
+    border: 0;
+    background: none;
+    display: block;
+    margin: auto;
+    text-align: center;
+    border: 1px solid red;
+    padding: 5px 15px;
+    outline: none;
+    color: white;
+    border-radius: 20px;
+    transition: 0.25s;
+    cursor: pointer;
+    font-size: small;
+}
+
+button[id="signout"]:hover {
+    color: white;
+    background: red;
+}
