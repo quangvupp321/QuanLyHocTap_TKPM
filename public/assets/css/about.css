@@ -1,4 +1,16 @@
-.about{
+.about {
     font-size: large;
     margin-top: 120px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: #34495e;
+    color: white;
+}
+
+body a {
+    color: white;
 }

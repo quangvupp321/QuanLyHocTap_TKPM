@@ -8,11 +8,11 @@ const product = require('../models/product_model');
 const extensFunc = require('../utils/extensionFunc'), run = extensFunc.errorHandle;
 
 //list category
-router.get('/cat', async (req, res, next) => {
+router.get('/course', async (req, res, next) => {
     if (!req.user) {
         console.log("Not sign in!!");
         return res.redirect('/user/signin');
-    } else if (req.user.f_permission != 2) {
+    } else if (req.user.f_permission != 1) {
         console.log("fail");
         return res.render('error/errorPage', {
             layout: false,
@@ -33,9 +33,9 @@ router.get('/cat', async (req, res, next) => {
             emptyList = true;
         } 
         //B2: render to web
-        res.render('./layouts/admin/cat', {
-            title: 'Admin-Category',
-            layout: './admin/cat',
+        res.render('./layouts/admin/course', {
+            title: 'Admin-Course',
+            layout: './admin/course',
             categories,
             emptyList,
         });
@@ -43,11 +43,11 @@ router.get('/cat', async (req, res, next) => {
 });
 
 //============================edit catategory
-router.post('/cat/edit', async (req,res,next) =>{
+router.post('/course/edit', async (req,res,next) =>{
     if (!req.user) {
         console.log("Not sign in!!");
         return res.redirect('/user/signin');
-    } else if (req.user.f_permission != 2) {
+    } else if (req.user.f_permission != 1) {
         console.log("fail");
         return res.render('error/errorPage', {
             layout: false,
@@ -75,16 +75,16 @@ router.post('/cat/edit', async (req,res,next) =>{
 
 
         //B4: redirect 
-        return res.redirect('/admin/cat');
+        return res.redirect('/admin/course');
     }
 });
 
 //=============================== delete category
-router.post('/cat/delete', async (req,res,next)=>{
+router.post('/course/delete', async (req,res,next)=>{
     if (!req.user) {
         console.log("Not sign in!!");
         return res.redirect('/user/signin');
-    } else if (req.user.f_permission != 2) {
+    } else if (req.user.f_permission != 1) {
         console.log("fail");
         return res.render('error/errorPage', {
             layout: false,
@@ -118,15 +118,15 @@ router.post('/cat/delete', async (req,res,next)=>{
         //Category have sub categyry can not delete
         console.log("Category have sub categyry can not delete ");
         //B : redirect
-        return res.redirect('/admin/cat');
+        return res.redirect('/admin/course');
     }
 });
 
-router.post('/cat/add', async (req,res,next) => {
+router.post('/course/add', async (req,res,next) => {
     if (!req.user) {
         console.log("Not sign in!!");
         return res.redirect('/user/signin');
-    } else if (req.user.f_permission != 2) {
+    } else if (req.user.f_permission != 1) {
         console.log("fail");
         return res.render('error/errorPage', {
             layout: false,
@@ -176,7 +176,7 @@ router.post('/cat/add', async (req,res,next) => {
         }
 
         //B5: redirect 
-        res.redirect('/admin/cat'); 
+        res.redirect('/admin/course'); 
     }
 });
 
@@ -185,7 +185,7 @@ router.get('/subcat', async (req, res, next) => {
     if (!req.user) {
         console.log("Not sign in!!");
         return res.redirect('/user/signin');
-    } else if (req.user.f_permission != 2) {
+    } else if (req.user.f_permission != 1) {
         console.log("fail");
         return res.render('error/errorPage', {
             layout: false,
@@ -224,7 +224,7 @@ router.post('/subcat/edit', async (req,res,next) =>{
     if (!req.user) {
         console.log("Not sign in!!");
         return res.redirect('/user/signin');
-    } else if (req.user.f_permission != 2) {
+    } else if (req.user.f_permission != 1) {
         console.log("fail");
         return res.render('error/errorPage', {
             layout: false,
@@ -268,7 +268,7 @@ router.post('/subcat/delete', async (req,res,next)=>{
     if (!req.user) {
         console.log("Not sign in!!");
         return res.redirect('/user/signin');
-    } else if (req.user.f_permission != 2) {
+    } else if (req.user.f_permission != 1) {
         console.log("fail");
         return res.render('error/errorPage', {
             layout: false,
@@ -314,7 +314,7 @@ router.post('/subcat/add', async (req,res,next) => {
     if (!req.user) {
         console.log("Not sign in!!");
         return res.redirect('/user/signin');
-    } else if (req.user.f_permission != 2) {
+    } else if (req.user.f_permission != 1) {
         console.log("fail");
         return res.render('error/errorPage', {
             layout: false,
@@ -383,7 +383,7 @@ router.get('/list-user', async (req, res, next) => {
     if (!req.user) {
 
         return res.redirect('/user/signin');
-    } else if (req.user.f_permission != 2) {
+    } else if (req.user.f_permission != 1) {
 
         return res.render('error/errorPage', {
             layout: false,
@@ -420,7 +420,7 @@ router.get('/promotion-list', async (req, res, next) => {
     if (!req.user) {
 
         return res.redirect('/user/signin');
-    } else if (req.user.f_permission != 2) {
+    } else if (req.user.f_permission != 1) {
 
         return res.render('error/errorPage', {
             layout: false,

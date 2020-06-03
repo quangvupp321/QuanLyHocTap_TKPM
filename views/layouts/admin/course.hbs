@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {{>import/head}}
+</head>
+
+<body>
+    <div class="d-flex" id="wrapper">
+        {{>import/navbar}}
+        <div id="page-content-wrapper">
+            {{!-- Ảnh, tên, giá, tg kết thúc --}}
+            <h1 class="container text-center mt-5">Customize</h1>
+            <div class="container shadow p-3 bg-white rounded my-3">
+                <h1 class="text-center text-primary">Course</h1>
+                {{#if emptyList}}
+                <div>You don't have any products</div>
+                {{else}}
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr class="d-flex">
+                            <th class="col-3">CourseID</th>
+                            <th class="col-6">Course Name</th>
+                            <th class="col-3">Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each categories}}
+                        <div>
+                            <tr class="d-flex">
+                                <td class="col-3">{{CategoryID}}</td>
+                                <form method="POST" action="/admin/cat/edit" id="hiddenForm{{CategoryID}}">
+                                    <td class="col-6">
+                                        <div class="form-group">
+                                            <div class="input-wrap">
+                                                <input type="text" name="categoryname" class="form-control"
+                                                    id="categoryname" value="{{CatName}}" placeholder="CategoryName">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-3">
+
+                                        <input type="hidden" name="catid" id="catid" value="{{CategoryID}}">
+                                        <button type="submit" class="btn btn-success">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+
+                                        <button type="button" class="btn btn-danger"
+                                            onclick="deleteCate({{CategoryID}})">
+                                            <i class="fad fa-trash-alt"></i>
+                                        </button>
+
+                                    </td>
+                                </form>
+                            </tr>
+                        </div>
+                        {{/each}}
+                        <div>
+                            <tr class="d-flex">
+                                <td class="col-3"></td>
+                                <td class="col-6">
+                                    <form method="POST" action="/admin/cat/add">
+                                        <div class="form-group">
+                                            <div class="input-wrap">
+                                                <input type="text" name="categoryname" class="form-control"
+                                                    id="categoryname" value="" placeholder="CategoryName">
+                                            </div>
+                                        </div>
+                                </td>
+                                <td class="col-3">
+
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </div>
+                    </tbody>
+                </table>
+                {{/if}}
+                <hr>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        function deleteCate(catID) {
+            let form = `#hiddenForm${catID}`;
+            $(form).attr('action', '/admin/cat/delete');
+            $(form).submit();
+        }
+    </script>
+    {{> import/b4_script}}
+    <script src="./assets/js/watch-list.js"></script>
+</body>
+
+</html>

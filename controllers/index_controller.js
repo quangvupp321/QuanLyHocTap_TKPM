@@ -18,11 +18,7 @@ router.get('/', async (req, res, next) => {
     } else {
 
         res.render('home', {
-            title: 'Online Auction',
-            sideCategory: sideCat,
-            mostBiddedPro,
-            mostExpPro,
-            nearEndPro,
+            title: 'Home',
         });
     }
 });
@@ -30,7 +26,7 @@ router.get('/', async (req, res, next) => {
 //contact page
 router.get('/contact', (req, res) => {
     res.render('./layouts/contact', {
-        title: 'Contact us',
+        title: 'Contact',
         layout: 'contact',
     });
 });
@@ -38,7 +34,7 @@ router.get('/contact', (req, res) => {
 //about page
 router.get('/about', (req, res) => {
     res.render('./layouts/about', {
-        title: 'About us',
+        title: 'About',
         layout: 'about',
     });
 });

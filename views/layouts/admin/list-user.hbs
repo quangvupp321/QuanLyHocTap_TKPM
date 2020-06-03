@@ -6,63 +6,65 @@
 </head>
 
 <body>
-    {{>import/navbar}}
-    {{!-- Ảnh, tên, giá, tg kết thúc --}}
-    <h1 class="container text-center mt-5">Customize</h1>
-    <div class="container shadow p-3 bg-white rounded my-3">
-        <h1 class="text-center">Account</h1>
-        {{#if emptyList}}
-        <div>You don't have any products</div>
-        {{else}}
-        <table class="table table-hover table-striped">
-            <thead>
-                <tr class="d-flex">
-                    <th class="col-1">ID</th>
-                    <th class="col-4">Fullname</th>
-                    <th class="col-2">Username</th>
-                    <th class="col-3">Permission</th>
-                    <th class="col-2">Downgrade</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{#each listOfUser}}
-                <div>
-                    <tr class="d-flex">
-                        <td class="col-1">{{f_userID}}</td>
-                        <td class="col-4">{{f_fullname}}</td>
-                        <td class="col-2">
-                            {{f_username}}
-                        </td>
-                        <td class="col-3">
-                            {{f_permission}}
-                        </td>
-                        <td class="col-2">
-                            {{#ifCond f_permission 1}}
-                            <form method="POST" id="hiddenForm{{f_userID}}">
-                                <input type="hidden" value="{{f_userID}}" id="userID_" name="userID_">
-                            </form>
-                            
-                            <button type="button" class="btn btn-danger" onclick="giangcap({{f_userID}})">
-                                    <i class="fas fa-arrow-alt-circle-down"></i>
-                                    
-                                </button>
-                            {{/ifCond}}
-                        </td>
-                    </tr>
-                </div>
-                {{/each}}
-            </tbody>
-        </table>
-        {{/if}}
-        <hr>
+    <div class="d-flex" id="wrapper">
+        {{>import/navbar}}
+        <div id="page-content-wrapper">
+            <h1 class="container text-center mt-5">Customize</h1>
+            <div class="container shadow p-3 bg-white rounded my-3">
+                <h1 class="text-center text-primary">Account</h1>
+                {{#if emptyList}}
+                <div>You don't have any products</div>
+                {{else}}
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr class="d-flex">
+                            <th class="col-1">ID</th>
+                            <th class="col-4">Fullname</th>
+                            <th class="col-2">Username</th>
+                            <th class="col-3">Permission</th>
+                            <th class="col-2">Downgrade</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each listOfUser}}
+                        <div>
+                            <tr class="d-flex">
+                                <td class="col-1">{{f_userID}}</td>
+                                <td class="col-4">{{f_fullname}}</td>
+                                <td class="col-2">
+                                    {{f_username}}
+                                </td>
+                                <td class="col-3">
+                                    {{f_permission}}
+                                </td>
+                                <td class="col-2">
+                                    {{#ifCond f_permission 1}}
+                                    <form method="POST" id="hiddenForm{{f_userID}}">
+                                        <input type="hidden" value="{{f_userID}}" id="userID_" name="userID_">
+                                    </form>
+
+                                    <button type="button" class="btn btn-danger" onclick="giangcap({{f_userID}})">
+                                        <i class="fas fa-arrow-alt-circle-down"></i>
+
+                                    </button>
+                                    {{/ifCond}}
+                                </td>
+                            </tr>
+                        </div>
+                        {{/each}}
+                    </tbody>
+                </table>
+                {{/if}}
+                <hr>
+            </div>
+        </div>
     </div>
     <script>
-        function giangcap(f_userID)
-        {
+        function giangcap(f_userID) {
             let form = `#hiddenForm${f_userID}`;
             console.log("hi");
             $(form).attr('action', '/admin/down-level');
-			$(form).submit();
+            $(form).submit();
         }
     </script>
     {{> import/b4_script}}

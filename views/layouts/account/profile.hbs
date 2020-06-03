@@ -8,10 +8,16 @@
 
 <body>
     <div class="d-flex" id="wrapper">
-       {{>import/navbar}}
-
-        <!-- Page Content -->
+        {{>import/navbar}}
         <div id="page-content-wrapper">
+            {{#if isSeller}}
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom bg-dark">
+                <a class="btn btn-success mx-1" href="/admin/list-user">Quản lý tài khoản</a>
+                <a class="btn btn-info mx-1" href="/admin/course">Quản lý học phần</a>
+            </nav>
+            {{else if isBidder}}
+            {{else}}
+            {{/if}}
             <form class="profile_box" onsubmit="return changePassword(this)" action="/account/profile" method="POST"
                 id="edit-account">
                 <h1>Profile</h1>
