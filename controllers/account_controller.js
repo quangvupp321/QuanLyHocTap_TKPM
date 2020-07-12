@@ -18,8 +18,9 @@ router.get('/profile', async (req, res, next) => {
         console.log("Not sign in!!");
         return res.redirect('/user/signin');
     } else {
+        console.log("Sign in!!");
         // B1: get user ID (had been saved) from req in session
-        const userID = req.user.f_userID;
+        const userID = req.user.id;
         //get data by user ID 
         const [user, err] = await run(account.getByUserID(userID));
         if (err) {
@@ -29,14 +30,14 @@ router.get('/profile', async (req, res, next) => {
         let permission = "Bidder";
         let isBidder = true;
         let isSeller = false;
-       
+
         //console.log(user);
-        if (user.f_permission === 1) {
+        if (user.permission === 1) {
             permission = "Seller";
             isBidder = false;
             isSeller = true;
-            
-        } else if (user.f_permission === 2) {
+
+        } else if (user.permission === 2) {
             permission = "Admin";
             isBidder = false;
             isSeller = false;
@@ -44,25 +45,61 @@ router.get('/profile', async (req, res, next) => {
         //infor of user show in profile 
         //can't change permission and rating
         const infor = {
-            fullname: user.f_fullname,
-            name: user.f_username,
-            email: user.f_email,
-            DOB: user.f_birth,
+            name: user.name,
+            mssv: user.mssv,
+            email: user.email,
+            major: user.major,
+            year: user.year,
             permiss: permission,
         };
+        console.log("User information: ", infor);
 
-        let total_date = [];
-        for (i = 1; i <= 31; i++) {
-            if (i == infor.DOB.getDate()) {
+        let total_year = [];
+        for (i = 2016; i <= 2019; i++) {
+            if (i == infor.year) {
                 isSelected = true;
             } else {
                 isSelected = false;
             }
-            total_date[i - 1] = {
-                date: i,
+            total_year[i-2016] = {
+                year: i,
                 isSelected,
             }
         }
+
+        let total_major = [];
+        for (i = 1; i <= 4; i++) {
+            if (i == infor.major) {
+                isSelected = true;
+            } else {
+                isSelected = false;
+            }
+            switch (i) {
+                case 1:
+                    major_show = "Khoa học máy tính";
+                    break;
+                case 2:
+                    major_show = "Kỹ thuật phần mềm";
+                    break;
+                case 3:
+                    major_show = "Hệ thống thông tin";
+                    break;
+                case 4:
+                    major_show = "Mạng máy tính và viễn thông";
+                    break;
+                default:
+                    major_show = "###";
+                    break;
+            }
+            total_major[i-1] = {
+                major: major_show,
+                isSelected,
+            }
+        }
+
+        console.log(total_year);
+        console.log(total_major);
+        /*
         let total_month = [];
         for (i = 1; i <= 12; i++) {
             if (i == (infor.DOB.getMonth() + 1)) {
@@ -94,12 +131,14 @@ router.get('/profile', async (req, res, next) => {
             total_year,
         }
         //render layout account 
+        */
 
         res.render('./layouts/account/profile', {
             title: 'Account',
             layout: './account/profile',
             infor,
-            total_day,
+            total_major,
+            total_year,
             isBidder,
             isSeller,
         });
@@ -112,9 +151,7 @@ router.post('/profile', async (req, res, next) => {
     if (!req.user) {
         console.log("Not sign in!!");
         return res.redirect('/user/signin');
-    } 
-    else 
-    {       
+    } else {
         const userID = req.user.f_userID;
 
         //B2: get data changed from profile form
@@ -137,10 +174,9 @@ router.post('/profile', async (req, res, next) => {
         if (isChangeLevel === 'checked') {
             console.log('Change level');
             //check if user have asked for promote before
-            const [isPromote,pErr] = await run(promote.checkPromote(userID));
+            const [isPromote, pErr] = await run(promote.checkPromote(userID));
 
-            if(pErr)
-            {
+            if (pErr) {
                 console.log("???");
                 return next(pErr);
             }
@@ -151,9 +187,8 @@ router.post('/profile', async (req, res, next) => {
                     UserID: userID,
                 };
 
-                const [id,err] = await run(promote.promoteReQuest(request));
-                if (err)
-                {
+                const [id, err] = await run(promote.promoteReQuest(request));
+                if (err) {
                     return next(err);
                 }
             }
@@ -188,12 +223,9 @@ router.post('/profile', async (req, res, next) => {
 
         //B7: change database 
         const [changed, error] = await run(account.updateUserInfor(newInfor));
-        if (error)
-        {
+        if (error) {
             console.log(error);
-        }
-        else
-        {
+        } else {
             console.log("Update user information successfully");
         }
         return res.redirect('/account/profile');
@@ -228,8 +260,7 @@ router.get('/bidded', async (req, res, next) => {
                 let topBidder = await order.getTopBidderByProID(listofPro[i].ProID);
                 topBidders[i] = topBidder;
                 let highest = false;
-                if (userID == topBidder.f_userID)
-                {
+                if (userID == topBidder.f_userID) {
                     highest = true;
                 }
                 listofPro[i] = {
@@ -380,12 +411,9 @@ router.get('/add-watch-list/:proid', async (req, res, next) => {
             console.log('You did add this product to Watch-List');
         } else {
             const [id, err] = await run(watchList.addProductToWatchList(newPro));
-            if (err) 
-            {
+            if (err) {
                 return next(err);
-            }
-            else 
-            {
+            } else {
                 console.log(id);
             }
         }
@@ -395,27 +423,24 @@ router.get('/add-watch-list/:proid', async (req, res, next) => {
         return res.redirect('/account/watch-list');
     }
 });
-router.post('/delete', async (req, res, next)=>
-{
+router.post('/delete', async (req, res, next) => {
     let proid = parseInt(req.body.proID_);
     const userid = req.user.f_userID;
     console.log(req.body.proID_);
     console.log(proid);
-    const [watID,err] = await run(watchList.getWatchListID(userid,proid));
-    if(err)
-    {
+    const [watID, err] = await run(watchList.getWatchListID(userid, proid));
+    if (err) {
         return next(err);
     }
-    
+
     const del = await run(watchList.delete(watID.WatchListID));
-    if(err)
-    {
-        
+    if (err) {
+
         return next(err);
     }
-    
+
     return res.redirect('/account/watch-list');
-    
+
 
 });
 
@@ -434,8 +459,7 @@ router.get('/review', async (req, res, next) => {
         // B1: get user ID (had been saved) from req in session
         const userID = req.user.f_userID;
         const [user, u_err] = await run(account.getByUserID(userID));
-        if (u_err)
-        {
+        if (u_err) {
             return next(u_err);
         }
         //get data by user ID 

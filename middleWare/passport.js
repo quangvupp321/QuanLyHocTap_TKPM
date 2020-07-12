@@ -14,7 +14,7 @@ const FACE_APP_SECRET = 'c767c27066be73696f0c8fec6ea255ba';
 
 module.exports = (passport) => {   
     passport.serializeUser((user,done) => {       
-        done(null,user.f_userID);
+        done(null,user.id);
     });
 
     passport.deserializeUser(async (id,done) =>{
@@ -26,7 +26,7 @@ module.exports = (passport) => {
         new LocalStrategy(async (username, password, done)=> {
         //error handling
 
-        const [user,err] = await run(account.getByUserName(username));
+        const [user,err] = await run(account.getByMssv(username));
         if (err)
         {
             return done(err);
@@ -37,7 +37,7 @@ module.exports = (passport) => {
             return done(null, false, { message: 'Incorrect username or password.' });
         }
 
-        else if (!bcrypt.compareSync(password,user.f_password))
+        else if (!bcrypt.compareSync(password,user.password))
         {
             return done(null, false, { message: 'Incorrect username or password.' });
         }

@@ -1,10 +1,17 @@
 -- MySQL dump 10.13  Distrib 8.0.20, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: qlht
+-- Host: localhost    Database: qlht
 -- ------------------------------------------------------
 -- Server version	8.0.20
+DROP DATABASE `qlht`;
 CREATE SCHEMA IF NOT EXISTS `qlht` DEFAULT CHARACTER SET utf8 ;
 USE `qlht` ;
+
+-- MySQL dump 10.13  Distrib 8.0.20, for Win64 (x86_64)
+--
+-- Host: localhost    Database: qlht
+-- ------------------------------------------------------
+-- Server version	8.0.20
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -25,7 +32,7 @@ DROP TABLE IF EXISTS `course`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `course` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
   `major` int DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -42,16 +49,14 @@ DROP TABLE IF EXISTS `deadline`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `deadline` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `user` int DEFAULT NULL,
   `title` varchar(45) DEFAULT NULL,
   `tag` varchar(45) NOT NULL,
   `duedate` datetime NOT NULL,
   `note` varchar(45) DEFAULT NULL,
   `iscomplete` tinyint DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `student_deadline_idx` (`user`),
-  CONSTRAINT `student_deadline` FOREIGN KEY (`user`) REFERENCES `user` (`mssv`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -63,10 +68,41 @@ DROP TABLE IF EXISTS `major`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `major` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `note`
+--
+
+DROP TABLE IF EXISTS `note`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `note` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user` int DEFAULT NULL,
+  `title` varchar(45) DEFAULT NULL,
+  `tag` varchar(45) DEFAULT NULL,
+  `content` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `schoolyear`
+--
+
+DROP TABLE IF EXISTS `schoolyear`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `schoolyear` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -77,14 +113,12 @@ DROP TABLE IF EXISTS `score`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `score` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `study` int DEFAULT NULL,
   `name` varchar(45) DEFAULT NULL,
   `score_num` float DEFAULT NULL,
   `percent` float DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `score_study_idx` (`study`),
-  CONSTRAINT `score_study` FOREIGN KEY (`study`) REFERENCES `study` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -96,16 +130,12 @@ DROP TABLE IF EXISTS `study`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `study` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `mssv` int DEFAULT NULL,
   `course` int DEFAULT NULL,
   `semester` int DEFAULT NULL,
   `schoolyear` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `student_study_idx` (`mssv`),
-  KEY `course_study_idx` (`course`),
-  CONSTRAINT `course_study` FOREIGN KEY (`course`) REFERENCES `course` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `student_study` FOREIGN KEY (`mssv`) REFERENCES `user` (`mssv`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -117,16 +147,15 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
-  `mssv` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `mssv` varchar(20) NOT NULL,
   `name` varchar(45) DEFAULT NULL,
   `email` varchar(45) NOT NULL,
-  `password` varchar(45) NOT NULL,
+  `password` varchar(75) NOT NULL,
   `major` int DEFAULT NULL,
   `year` int DEFAULT NULL,
   `permission` tinyint DEFAULT NULL,
-  PRIMARY KEY (`mssv`),
-  KEY `student_major_idx` (`major`),
-  CONSTRAINT `student_major` FOREIGN KEY (`major`) REFERENCES `major` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -139,4 +168,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-11 13:24:03
+-- Dump completed on 2020-07-10 16:41:16

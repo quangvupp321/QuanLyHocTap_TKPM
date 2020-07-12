@@ -1,8 +1,8 @@
 const db = require('../utils/db');
 const run = db.errorHandle;
-const tbName ='user_';
+const tbName ='user';
 
-const idField = 'f_userID';
+const idField = 'id';
 module.exports = {
     // add new account to user table of databsae 
     addNewAccount: async newUser =>{
@@ -13,10 +13,10 @@ module.exports = {
         }
         return id;
     },
-    //get data of user by userName
-    getByUserName: async userName =>{
+    //get data of user by mssv
+    getByMssv: async mssv =>{
         let sql = 'SELECT * FROM ?? WHERE ?? = ?';
-        const params = [tbName, 'f_Username', userName];   
+        const params = [tbName, 'mssv', mssv];   
         sql = db.mysql.format(sql, params);
         const [rows,err] = await run(db.load(sql));
         if (err)
@@ -35,7 +35,7 @@ module.exports = {
     //get user by user id
     getByUserID: async userID =>{
         let sql = 'SELECT * FROM ?? WHERE ?? = ?';
-        const params = [tbName, 'f_userID', userID];   
+        const params = [tbName, 'id', userID];   
         sql = db.mysql.format(sql, params);
         const [rows,err] = await run(db.load(sql));
         if (err)
@@ -52,10 +52,10 @@ module.exports = {
         }
     },
 
-    //check email exists
-    checkEmmailExists: async email =>{
+    //Check MSSV Exists
+    checkMssvExists: async mssv =>{
         let sql = `SELECT * FROM ?? WHERE ?? =  ?;`;
-        const params = [tbName,'f_email', email];
+        const params = [tbName,'mssv', mssv];
         sql = db.mysql.format(sql,params); 
         const [isExists, error] = await run(db.load(sql));
         if (error)
@@ -100,7 +100,7 @@ module.exports = {
     },
     downpermission: async (userid)=>
     {
-        let sql = 'update ?? set f_permission=0 where f_userID=?'
+        let sql = 'update ?? set permission=0 where id=?'
         const params = [tbName,userid];
         sql = db.mysql.format(sql,params); 
         const [rows,err] = await run(db.load(sql));
@@ -112,7 +112,7 @@ module.exports = {
     },
     uppermission: async (userid)=>
     {
-        let sql = 'update ?? set f_permission=1 where f_userID=?'
+        let sql = 'update ?? set permission=1 where id=?'
         const params = [tbName,userid];
         sql = db.mysql.format(sql,params); 
         const [rows,err] = await run(db.load(sql));

@@ -7,8 +7,9 @@
 </head>
 
 <body>
+    {{>import/navbar}}
     <div class="d-flex" id="wrapper">
-        {{>import/navbar}}
+
         <div id="page-content-wrapper">
             {{#if isSeller}}
             <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom bg-dark">
@@ -24,30 +25,85 @@
                 <div class="form-group">
                     <label class="control-label" for="fullname">Họ và tên</label>
                     <div class="input-wrap">
-                        <input type="text" name="fullname" class="form-control" id="fullname" value="{{infor.fullname}}"
+                        <input type="text" name="fullname" class="form-control" id="fullname" value="{{infor.name}}"
                             placeholder="Fullname">
                         <span class="help-block"></span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label" for="username">MSSV</label>
+                    <label class="control-label" for="mssv">MSSV</label>
                     <div class="input-wrap">
-                        <input type="text" name="username" class="form-control" id="username" value="{{infor.name}}"
-                            placeholder="Username" disabled="">
+                        <input type="text" name="mssv" class="form-control" id="mssv" value="{{infor.mssv}}"
+                            placeholder="MSSV" disabled="">
                         <span class="help-block"></span>
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="control-label" for="major">Chuyên ngành</label>
+                    <div class="input-wrap">
+                        <input type="text" name="major" class="form-control" id="major" value="{{infor.major}}"
+                            placeholder="Chuyên ngành">
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="year">Khóa</label>
+                    <div class="input-wrap">
+                        <input type="text" name="year" class="form-control" id="year" value="{{infor.year}}"
+                            placeholder="Khóa">
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="email">Email</label>
+                    <div class="input-wrap">
+                        <input type="text" name="email" class="form-control" id="email" value="{{infor.email}}"
+                            placeholder="Email">
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+                <div class="form-group mb-5">
+                    <label class="control-label no-lh" for="major">
+                        Chuyên ngành
+                    </label>
+                    <div class="custom-select" style="width:200px;">
+                        <select name="major" id="major">
+                            <option value="0">Chuyên ngành</option>
+                            {{#each total_major}}
+                            <option value="{{major}}" {{#if isSelected}} selected="selected" {{/if}}>
+                                {{major}}
+                            </option>
+                            {{/each}}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group mb-5">
+                    <label class="control-label no-lh" for="year">
+                        Khóa
+                    </label>
+                    <div class="custom-select" style="width:200px;">
+                        <select name="year" id="year">
+                            <option value="0">Khóa</option>
+                            {{#each total_year}}
+                            <option value="{{year}}" {{#if isSelected}} selected="selected" {{/if}}>
+                                {{year}}
+                            </option>
+                            {{/each}}
+                        </select>
+                    </div>
+                </div>
+                {{!--                 
+                <div class="form-group">
                     <label class="control-label no-lh" for="birthdate">
-                        Ngày sinh
+                        Chuyên ngành
                     </label>
                     <div class="input-wrap" id="birthday_border">
                         <fieldset class="birthday-picker ml-3">
                             <div class="row">
                                 <select class="birth-day form-control col-3" name="birth[day]">
-                                    {{#each total_day.total_date}}
-                                    <option value="{{date}}" {{#if isSelected}} selected="selected" {{/if}}>
-                                        {{date}}
+                                    {{#each total_major}}
+                                    <option value="{{major}}" {{#if isSelected}} selected="selected" {{/if}}>
+                                        {{major}}
                                     </option>
                                     {{/each}}
                                 </select>
@@ -67,7 +123,7 @@
                             </div>
                         </fieldset>
                     </div>
-                </div>
+                </div> --}}
                 <div class="form-group">
                     <div class="input-wrap margin">
                         <label class="control-label" class="checkbox">
@@ -112,7 +168,86 @@
         <!-- /#page-content-wrapper -->
     </div>
     <!-- /#wrapper -->
-
+    <script>
+        var x, i, j, l, ll, selElmnt, a, b, c;
+        /*look for any elements with the class "custom-select":*/
+        x = document.getElementsByClassName("custom-select");
+        l = x.length;
+        for (i = 0; i < l; i++) {
+            selElmnt = x[i].getElementsByTagName("select")[0];
+            ll = selElmnt.length;
+            /*for each element, create a new DIV that will act as the selected item:*/
+            a = document.createElement("DIV");
+            a.setAttribute("class", "select-selected");
+            a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+            x[i].appendChild(a);
+            /*for each element, create a new DIV that will contain the option list:*/
+            b = document.createElement("DIV");
+            b.setAttribute("class", "select-items select-hide");
+            for (j = 1; j < ll; j++) {
+                /*for each option in the original select element,
+                create a new DIV that will act as an option item:*/
+                c = document.createElement("DIV");
+                c.innerHTML = selElmnt.options[j].innerHTML;
+                c.addEventListener("click", function (e) {
+                    /*when an item is clicked, update the original select box,
+                    and the selected item:*/
+                    var y, i, k, s, h, sl, yl;
+                    s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+                    sl = s.length;
+                    h = this.parentNode.previousSibling;
+                    for (i = 0; i < sl; i++) {
+                        if (s.options[i].innerHTML == this.innerHTML) {
+                            s.selectedIndex = i;
+                            h.innerHTML = this.innerHTML;
+                            y = this.parentNode.getElementsByClassName("same-as-selected");
+                            yl = y.length;
+                            for (k = 0; k < yl; k++) {
+                                y[k].removeAttribute("class");
+                            }
+                            this.setAttribute("class", "same-as-selected");
+                            break;
+                        }
+                    }
+                    h.click();
+                });
+                b.appendChild(c);
+            }
+            x[i].appendChild(b);
+            a.addEventListener("click", function (e) {
+                /*when the select box is clicked, close any other select boxes,
+                and open/close the current select box:*/
+                e.stopPropagation();
+                closeAllSelect(this);
+                this.nextSibling.classList.toggle("select-hide");
+                this.classList.toggle("select-arrow-active");
+            });
+        }
+        function closeAllSelect(elmnt) {
+            /*a function that will close all select boxes in the document,
+            except the current select box:*/
+            var x, y, i, xl, yl, arrNo = [];
+            x = document.getElementsByClassName("select-items");
+            y = document.getElementsByClassName("select-selected");
+            xl = x.length;
+            yl = y.length;
+            for (i = 0; i < yl; i++) {
+                if (elmnt == y[i]) {
+                    arrNo.push(i)
+                } else {
+                    y[i].classList.remove("select-arrow-active");
+                }
+            }
+            for (i = 0; i < xl; i++) {
+                if (arrNo.indexOf(i)) {
+                    x[i].classList.add("select-hide");
+                }
+            }
+        }
+        /*if the user clicks anywhere outside the select box,
+        then close all select boxes:*/
+        document.addEventListener("click", closeAllSelect);
+    </script>
     {{> import/b4_script}}
 </body>
 

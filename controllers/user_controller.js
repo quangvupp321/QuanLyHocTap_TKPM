@@ -30,13 +30,24 @@ router.get('/signup', (req, res) => {
 });
 
 // log in
-router.post('/signin', (req, res, next) => {
+/*
+router.post('/signin',
+    passport.authenticate('local', { failureRedirect: '/signin'}),
+    function(req, res) {
+        res.redirect('/account/profile');
+    }
+)
+*/
+
+router.post('/signin', async (req, res, next) => {
     //authenticate with local sign in =
     passport.authenticate('local', (err, user, infor) => {
         // error
         if (err) {
+            console.log("###Error###");
             return next(err);
         }
+        console.log("Not error");
         // didn't sign in
         if (!user) {
             return res.render('./layouts/signin', {
@@ -55,45 +66,44 @@ router.post('/signin', (req, res, next) => {
     })(req, res, next);
 });
 
+
 //register for new account
 router.post('/signup', async (req, res, next) => {
     //B1: get data from sign up form
     const fullName = req.body.fullname;
-    const userName = req.body.username;
+    const mssv = req.body.mssv;
     const password = req.body.password;
-    const DOB = req.body.birth;
+    const email = req.body.email;
+    const major = req.body.major;
+    const year = req.body.year;
 
     //B2: hash password 
     const hashPass = bcrypt.hashSync(password, saltRounds);
 
     //B3: check email is exists
-    /*
-    const [isExists, error] = await run(account.checkEmmailExists(email));
+    
+    const [isExists, error] = await run(account.checkMssvExists(mssv));
     if (error) {
         return next(error);
     }
     //is exist
     else if (isExists) {
         return res.render('./layouts/signup', {
+            title: 'MSSV has been registed',
             layout: 'signup',
-            captcha: recaptcha.renderWith({
-                'hl': 'en-US'
-            }),
-            message: 'Email has been registed',
+            message: 'MSSV has been registed',
         })
     }
-    */
 
     //B4: create object to add new account
     const newAccount = {
-        f_fullname: fullName,
-        f_username: userName,
-        f_email: "abc@gmail.com",
-        f_password: hashPass,
-        f_birth: DOB,
-        f_address: "address",
-        f_rating: 0,
-        f_permission: 0,
+        name: fullName,
+        mssv: mssv,
+        email: email,
+        password: hashPass,
+        major: major,
+        year: year,
+        permission: 0,
     };
 
     //B5: check captcha
