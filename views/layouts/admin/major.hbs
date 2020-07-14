@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {{>import/head}}
+</head>
+
+<body>
+    {{>import/navbar}}
+    <div class="d-flex" id="wrapper">
+
+        <div id="page-content-wrapper">
+            {{!-- Ảnh, tên, giá, tg kết thúc --}}
+            <h1 class="container text-center mt-5">Customize</h1>
+            <div class="container shadow p-3 bg-white rounded my-3">
+                <h1 class="text-center text-primary">Major</h1>
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr class="d-flex">
+                            <th class="col-3">MajorID</th>
+                            <th class="col-6">Major Name</th>
+                            <th class="col-3">Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each majors}}
+                        {{#ifCond id 0}}
+                        <div>
+                            <tr class="d-flex">
+                                <td class="col-3">{{id}}</td>
+                                <form method="POST" action="/admin/major/edit" id="hiddenForm{{id}}">
+                                    <td class="col-6">
+                                        <div class="form-group">
+                                            <div class="input-wrap">
+                                                <input type="text" name="majorname" class="form-control" id="majorname"
+                                                    value="{{name}}" placeholder="Tên chuyên ngành" disabled>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-3">
+
+                                        <input type="hidden" name="majorid" id="majorid" value="{{id}}">
+                                        <button type="submit" class="btn btn-success" style="visibility: hidden;">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+
+                                        <button type="button" class="btn btn-danger" onclick="deleteMajor({{id}})" style="visibility: hidden;">
+                                            <i class="fad fa-trash-alt"></i>
+                                        </button>
+
+                                    </td>
+                                </form>
+                            </tr>
+                        </div>
+                        {{else}}
+                        <div>
+                            <tr class="d-flex">
+                                <td class="col-3">{{id}}</td>
+                                <form method="POST" action="/admin/major/edit" id="hiddenForm{{id}}">
+                                    <td class="col-6">
+                                        <div class="form-group">
+                                            <div class="input-wrap">
+                                                <input type="text" name="majorname" class="form-control" id="majorname"
+                                                    value="{{name}}" placeholder="Tên chuyên ngành">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-3">
+
+                                        <input type="hidden" name="majorid" id="majorid" value="{{id}}">
+                                        <button type="submit" class="btn btn-success">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+
+                                        <button type="button" class="btn btn-danger" onclick="deleteMajor({{id}})">
+                                            <i class="fad fa-trash-alt"></i>
+                                        </button>
+
+                                    </td>
+                                </form>
+                            </tr>
+                        </div>
+                        {{/ifCond}}
+
+                        {{/each}}
+                        <div>
+                            <tr class="d-flex">
+                                <td class="col-3"></td>
+                                <td class="col-6">
+                                    <form method="POST" action="/admin/major/add">
+                                        <div class="form-group">
+                                            <div class="input-wrap">
+                                                <input type="text" name="majorname" class="form-control" id="majorname"
+                                                    value="" placeholder="Tên chuyên ngành">
+                                            </div>
+                                        </div>
+                                </td>
+                                <td class="col-3">
+
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </div>
+                    </tbody>
+                </table>
+                <hr>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        function deleteMajor(id) {
+            let form = `#hiddenForm${id}`;
+            $(form).attr('action', '/admin/major/delete');
+            $(form).submit();
+        }
+    </script>
+    {{> import/b4_script}}
+</body>
+
+</html>

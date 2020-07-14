@@ -77,6 +77,7 @@ module.exports = {
     },
     //delete row in databse base on table Name, column name, id
     del: (tbName, idFields, id) =>{
+        
         return new Promise((reject, resole) => {
             const connection = createConnection();
 
@@ -86,10 +87,11 @@ module.exports = {
                 }
             });
             //create query
-            let sql = `DELETE FROM ?? WHERE ?? = ?`;            
-            const params = [tbName, idFields, id];
+
+            let sql = `DELETE FROM ${tbName} WHERE ${idFields} = ?`;            
+            const params = [id];
             sql = mysql.format(sql, params);
-            connection.query(sql ,(error, results, fields)=>{
+            connection.query(sql, (error, results, fields)=>{
                 if (error)
                 {
                     reject(error);

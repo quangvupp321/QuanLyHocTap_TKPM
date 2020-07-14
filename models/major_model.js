@@ -1,6 +1,7 @@
 const db = require('../utils/db');
 const run = db.errorHandle;
 const tbName = 'major';
+const tbCourse = 'course';
 
 module.exports = {
     //get all category
@@ -38,7 +39,7 @@ module.exports = {
 
     getCourseByMajorID: async majorID =>{
         let sql = 'SELECT * FROM ?? WHERE ?? = ?';
-        const params = [tbName, 'major', majorID];   
+        const params = [tbCourse, 'major', majorID];   
         sql = db.mysql.format(sql, params);
         const [rows,err] = await run(db.load(sql));
         if (err)
