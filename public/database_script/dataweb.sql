@@ -23,7 +23,7 @@ USE `qlht`;
 
 LOCK TABLES `course` WRITE;
 /*!40000 ALTER TABLE `course` DISABLE KEYS */;
-INSERT INTO `course` VALUES (1,'Thiết kế phần mềm',2),(2,'Phân tích yêu cầu phần mềm',2),(3,'Máy học',1),(4,'Phương pháp tính',0),(5,'Lý thuyết số',0),(6,'Nhập môn lập trình',0),(7,'Kỹ thuật lập tình',0),(8,'Lập trình ứng dụng web',2),(9,'Lập trình ứng dụng Java',2),(10,'Trí tuệ nhân tạo',1),(11,'An toàn và bảo mật HTTT',3),(12,'Hệ quản trị CSDL',3);
+INSERT INTO `course` VALUES (1,'Thiết kế phần mềm',2,4),(2,'Phân tích yêu cầu phần mềm',2,4),(3,'Nhập môn học máy',1,4),(4,'Phương pháp tính',0,4),(5,'Lý thuyết số',0,4),(6,'Nhập môn lập trình',0,4),(7,'Kỹ thuật lập tình',0,4),(8,'Lập trình ứng dụng web',2,4),(9,'Lập trình ứng dụng Java',2,4),(10,'Cơ sở trí tuệ nhân tạo',1,4),(11,'An toàn và bảo mật HTTT',3,4),(12,'Hệ quản trị CSDL',3,4);
 /*!40000 ALTER TABLE `course` ENABLE KEYS */;
 UNLOCK TABLES;
 

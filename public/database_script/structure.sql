@@ -35,6 +35,7 @@ CREATE TABLE `course` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
   `major` int DEFAULT NULL,
+  `credit` int DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `course_major_idx` (`major`),
   CONSTRAINT `course_major` FOREIGN KEY (`major`) REFERENCES `major` (`id`) ON DELETE CASCADE ON UPDATE CASCADE

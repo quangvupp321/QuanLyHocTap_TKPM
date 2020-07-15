@@ -16,7 +16,7 @@ router.get('/course', async (req, res, next) => {
     if (!req.user) {
         console.log("Not sign in!!");
         return res.redirect('/user/signin');
-    } else if (req.user.f_permission != 1) {
+    } else if (req.user.permission != 1) {
         console.log("fail");
         return res.render('error/errorPage', {
             layout: false,
