@@ -11,7 +11,7 @@
     <div class="d-flex" id="wrapper">
 
         <div id="page-content-wrapper">
-            {{#if isSeller}}
+            {{#if isAdmin}}
             <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom bg-dark">
                 <a class="btn btn-success mx-1" href="/admin/list-user">Quản lý tài khoản</a>
                 <a class="btn btn-info mx-1" href="/admin/course">Quản lý học phần</a>
@@ -40,22 +40,6 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label" for="major">Chuyên ngành</label>
-                    <div class="input-wrap">
-                        <input type="text" name="major" class="form-control" id="major" value="{{infor.major}}"
-                            placeholder="Chuyên ngành">
-                        <span class="help-block"></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="year">Khóa</label>
-                    <div class="input-wrap">
-                        <input type="text" name="year" class="form-control" id="year" value="{{infor.year}}"
-                            placeholder="Khóa">
-                        <span class="help-block"></span>
-                    </div>
-                </div>
-                <div class="form-group">
                     <label class="control-label" for="email">Email</label>
                     <div class="input-wrap">
                         <input type="text" name="email" class="form-control" id="email" value="{{infor.email}}"
@@ -63,6 +47,9 @@
                         <span class="help-block"></span>
                     </div>
                 </div>
+                {{#if isAdmin}}
+                {{else}}
+                
                 <div class="form-group mb-5">
                     <label class="control-label no-lh" for="major">
                         Chuyên ngành
@@ -71,7 +58,7 @@
                         <select name="major" id="major">
                             <option value="0">Chuyên ngành</option>
                             {{#each total_major}}
-                            <option value="{{major}}" {{#if isSelected}} selected="selected" {{/if}}>
+                            <option value="{{id}}" {{#if isSelected}} selected="selected" {{/if}}>
                                 {{major}}
                             </option>
                             {{/each}}
@@ -93,38 +80,7 @@
                         </select>
                     </div>
                 </div>
-                {{!--                 
-                <div class="form-group">
-                    <label class="control-label no-lh" for="birthdate">
-                        Chuyên ngành
-                    </label>
-                    <div class="input-wrap" id="birthday_border">
-                        <fieldset class="birthday-picker ml-3">
-                            <div class="row">
-                                <select class="birth-day form-control col-3" name="birth[day]">
-                                    {{#each total_major}}
-                                    <option value="{{major}}" {{#if isSelected}} selected="selected" {{/if}}>
-                                        {{major}}
-                                    </option>
-                                    {{/each}}
-                                </select>
-                                <select class="birth-month form-control col-3" name="birth[month]">
-                                    {{#each total_day.total_month}}
-                                    <option value="{{month}}" {{#if isSelected}} selected="selected" {{/if}}>
-                                        {{month}}</option>
-                                    {{/each}}
-                                </select>
-                                <select class="birth-year form-control col-3" name="birth[year]">
-                                    {{#each total_day.total_year}}
-                                    <option value="{{year}}" {{#if isSelected}} selected="selected" {{/if}}>
-                                        {{year}}
-                                    </option>
-                                    {{/each}}
-                                </select>
-                            </div>
-                        </fieldset>
-                    </div>
-                </div> --}}
+                {{/if}}
                 <div class="form-group">
                     <div class="input-wrap margin">
                         <label class="control-label" class="checkbox">

@@ -18,7 +18,7 @@ router.get('/', async (req, res, next) => {
     } else {
 
         res.render('home', {
-            title: 'Home',
+            title: 'Homepage',
         });
     }
 });

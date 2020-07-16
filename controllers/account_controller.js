@@ -1,10 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const account = require('../models/user_model');
-const order = require('../models/order_model');
-const promote = require('../models/promote_model');
-const watchList = require('../models/watch_list_model');
-const mReview = require('../models/review_model');
+const major_model = require('../models/major_model');
 
 //require extenstion
 const run = require('../utils/extensionFunc').errorHandle;
@@ -27,20 +24,15 @@ router.get('/profile', async (req, res, next) => {
             return next(err);
         }
         //display perrmisson of account
-        let permission = "Bidder";
-        let isBidder = true;
-        let isSeller = false;
+        let permission = "User";
+        let isUser = true;
+        let isAdmin = false;
 
         //console.log(user);
         if (user.permission === 1) {
-            permission = "Seller";
-            isBidder = false;
-            isSeller = true;
-
-        } else if (user.permission === 2) {
             permission = "Admin";
-            isBidder = false;
-            isSeller = false;
+            isUser = false;
+            isAdmin = true;
         }
         //infor of user show in profile 
         //can't change permission and rating
@@ -66,72 +58,24 @@ router.get('/profile', async (req, res, next) => {
                 isSelected,
             }
         }
+        const [majors, merr] = await run(major_model.allMajor());
+        if (err) {
+            return next(merr);
+        }
 
         let total_major = [];
-        for (i = 1; i <= 4; i++) {
+        for (i = 1; i < majors.length; i++) {
             if (i == infor.major) {
                 isSelected = true;
             } else {
                 isSelected = false;
             }
-            switch (i) {
-                case 1:
-                    major_show = "Khoa học máy tính";
-                    break;
-                case 2:
-                    major_show = "Kỹ thuật phần mềm";
-                    break;
-                case 3:
-                    major_show = "Hệ thống thông tin";
-                    break;
-                case 4:
-                    major_show = "Mạng máy tính và viễn thông";
-                    break;
-                default:
-                    major_show = "###";
-                    break;
-            }
             total_major[i-1] = {
-                major: major_show,
+                major: majors[i].name,
+                id: majors[i].id,
                 isSelected,
             }
         }
-
-        console.log(total_year);
-        console.log(total_major);
-        /*
-        let total_month = [];
-        for (i = 1; i <= 12; i++) {
-            if (i == (infor.DOB.getMonth() + 1)) {
-                isSelected = true;
-            } else {
-                isSelected = false;
-            }
-            total_month[i - 1] = {
-                month: i,
-                isSelected,
-            }
-        }
-        let total_year = [];
-        for (i = 1990; i <= 2020; i++) {
-            if (i == (infor.DOB.getYear() + 1900)) {
-                isSelected = true;
-            } else {
-                isSelected = false;
-            }
-            total_year[i - 1950] = {
-                year: i,
-                isSelected,
-            }
-
-        }
-        const total_day = {
-            total_date,
-            total_month,
-            total_year,
-        }
-        //render layout account 
-        */
 
         res.render('./layouts/account/profile', {
             title: 'Account',
@@ -139,8 +83,8 @@ router.get('/profile', async (req, res, next) => {
             infor,
             total_major,
             total_year,
-            isBidder,
-            isSeller,
+            isUser,
+            isAdmin,
         });
     }
 });
@@ -152,14 +96,13 @@ router.post('/profile', async (req, res, next) => {
         console.log("Not sign in!!");
         return res.redirect('/user/signin');
     } else {
-        const userID = req.user.f_userID;
+        const userID = req.user.id;
 
         //B2: get data changed from profile form
-        const isChangeLevel = req.body.is_change_level;
         const fullname = req.body.fullname;
         const email = req.body.email;
-        const dob = `${req.body.birth.year}-${req.body.birth.month}-${req.body.birth.day}`;
-        const address = req.body.address;
+        const major = req.body.major;
+        const year = req.body.year;
         let oldPass = req.body.old_password;
         const newPass = req.body.new_password;
         const isChangePass = req.body.is_change_pass;
@@ -170,58 +113,34 @@ router.post('/profile', async (req, res, next) => {
             return next(err);
         }
 
-        //B4: Check if user want to prmote form bidded to seller
-        if (isChangeLevel === 'checked') {
-            console.log('Change level');
-            //check if user have asked for promote before
-            const [isPromote, pErr] = await run(promote.checkPromote(userID));
-
-            if (pErr) {
-                console.log("???");
-                return next(pErr);
-            }
-            if (isPromote) {
-                //CREATE ENTITY TO PROMORE
-                const request = {
-
-                    UserID: userID,
-                };
-
-                const [id, err] = await run(promote.promoteReQuest(request));
-                if (err) {
-                    return next(err);
-                }
-            }
-        }
-
-        //B5: check if user want to change password
+        //B4: check if user want to change password
         if (isChangePass === 'checked') {
             //if old password is not correct
-            if (!bcrypt.compareSync(oldPass, user.f_password)) {
+            if (!bcrypt.compareSync(oldPass, user.password)) {
                 return res.redirect('/user/signin');
             } else {
                 //hash password
                 oldPass = bcrypt.hashSync(newPass, saltRounds);
             }
         } else {
-            oldPass = user.f_password;
+            console.log('Password: ', user.password);
+            oldPass = user.password;
         }
 
 
-        //B6: create entity for change
+        //B5: create entity for change
         const newInfor = {
-            f_userID: userID,
-            f_fullname: fullname,
-            f_username: user.f_username,
-            f_email: email,
-            f_password: oldPass,
-            f_birth: new Date(dob),
-            f_address: address,
-            f_rating: user.f_rating,
-            f_permission: user.f_permission,
+            id: userID,
+            mssv: user.mssv,
+            name: fullname,
+            email: email,
+            password: oldPass,
+            major: major,
+            year: year,
+            permission: user.permission,
         };
 
-        //B7: change database 
+        //B6: change database 
         const [changed, error] = await run(account.updateUserInfor(newInfor));
         if (error) {
             console.log(error);

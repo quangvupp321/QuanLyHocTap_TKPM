@@ -61,7 +61,7 @@ router.post('/signin', async (req, res, next) => {
             if (err) {
                 return next(err);
             }
-            return res.redirect('/account/profile');
+            return res.redirect('/');
         });
     })(req, res, next);
 });
