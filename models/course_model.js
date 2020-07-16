@@ -1,6 +1,7 @@
 const db = require('../utils/db');
 const run = db.errorHandle;
 const tbName = 'course';
+const tbMajor = 'major';
 
 module.exports = {
     //get all category

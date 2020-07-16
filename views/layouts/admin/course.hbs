@@ -6,47 +6,63 @@
 </head>
 
 <body>
+    {{>import/navbar}}
     <div class="d-flex" id="wrapper">
-        {{>import/navbar}}
+
         <div id="page-content-wrapper">
-            {{!-- Ảnh, tên, giá, tg kết thúc --}}
             <h1 class="container text-center mt-5">Customize</h1>
             <div class="container shadow p-3 bg-white rounded my-3">
-                <h1 class="text-center text-primary">Course</h1>
-                {{#if emptyList}}
-                <div>You don't have any products</div>
-                {{else}}
+                <h1 class="text-center text-primary">Học phần</h1>
                 <table class="table table-hover table-striped">
                     <thead>
                         <tr class="d-flex">
-                            <th class="col-3">CourseID</th>
-                            <th class="col-6">Course Name</th>
-                            <th class="col-3">Edit</th>
+                            <th class="col-1">CourseID</th>
+                            <th class="col-2">MajorID</th>
+                            <th class="col-4">Tên học phần</th>
+                            <th class="col-2">Tín chỉ</th>
+                            <th class="col-3">Chỉnh sửa</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {{#each categories}}
+                        {{#each courses}}
                         <div>
                             <tr class="d-flex">
-                                <td class="col-3">{{CategoryID}}</td>
-                                <form method="POST" action="/admin/cat/edit" id="hiddenForm{{CategoryID}}">
-                                    <td class="col-6">
+                                <td class="col-1">{{id}}</td>
+                                <form method="POST" action="/admin/course/edit" id="hiddenForm{{id}}">
+                                    <td class="col-2">
                                         <div class="form-group">
                                             <div class="input-wrap">
-                                                <input type="text" name="categoryname" class="form-control"
-                                                    id="categoryname" value="{{CatName}}" placeholder="CategoryName">
+                                                <input type="number" name="majorid" class="form-control"
+                                                    id="majorid" value="{{major}}" placeholder="MajorID">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-4">
+                                        <div class="form-group">
+                                            <div class="input-wrap">
+                                                <input type="text" name="coursename" class="form-control"
+                                                    id="coursename" value="{{name}}" placeholder="Tên học phần">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-2">
+                                        <div class="form-group">
+                                            <div class="input-wrap">
+                                                <input type="number" name="credit" class="form-control"
+                                                    id="credit" value="{{credit}}" placeholder="credit">
                                             </div>
                                         </div>
                                     </td>
                                     <td class="col-3">
-
-                                        <input type="hidden" name="catid" id="catid" value="{{CategoryID}}">
-                                        <button type="submit" class="btn btn-success">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-
+                                        <input type="hidden" name="majid" id="majid" value="{{major}}">
+                                        <input type="hidden" name="courseid" id="courseid" value="{{id}}">
+                                        <a href="#">
+                                            <button type="submit" class="btn btn-warning">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                        </a>
                                         <button type="button" class="btn btn-danger"
-                                            onclick="deleteCate({{CategoryID}})">
+                                            onclick="deleteCourse({{id}})">
                                             <i class="fad fa-trash-alt"></i>
                                         </button>
 
@@ -57,37 +73,75 @@
                         {{/each}}
                         <div>
                             <tr class="d-flex">
-                                <td class="col-3"></td>
-                                <td class="col-6">
-                                    <form method="POST" action="/admin/cat/add">
+                                <form method="POST" action="/admin/course/add">
+                                    <td class="col-1"></td>
+                                    <td class="col-2">
                                         <div class="form-group">
                                             <div class="input-wrap">
-                                                <input type="text" name="categoryname" class="form-control"
-                                                    id="categoryname" value="" placeholder="CategoryName">
+                                                <input type="number" name="majorid" class="form-control"
+                                                    id="majorid" value="" placeholder="MajorID">
                                             </div>
                                         </div>
-                                </td>
-                                <td class="col-3">
+                                    </td>
+                                    <td class="col-4">
+                                        <div class="form-group">
+                                            <div class="input-wrap">
+                                                <input type="text" name="coursename" class="form-control"
+                                                    id="coursename" value="" placeholder="Tên học phần">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-2">
+                                        <div class="form-group">
+                                            <div class="input-wrap">
+                                                <input type="number" name="credit" class="form-control"
+                                                    id="credit" value="" placeholder="credit">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-3">
 
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="fas fa-plus"></i>
-                                    </button>
-                                    </form>
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                </form>
                                 </td>
                             </tr>
                         </div>
                     </tbody>
                 </table>
-                {{/if}}
+                <hr>
+            </div>
+
+            <div class="container shadow p-3 bg-white rounded my-3">
+                <h1 class="text-center text-primary">Chuyên ngành</h1>
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr class="d-flex">
+                            <th class="col-4">MajorID</th>
+                            <th class="col-8">Tên chuyên ngành</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each majors}}
+                        <div>
+                            <tr class="d-flex">
+                                <td class="col-4">{{id}}</td>
+                                <td class="col-8">{{name}}</td>
+                            </tr>
+                        </div>
+                        {{/each}}
+                    </tbody>
+                </table>
                 <hr>
             </div>
         </div>
     </div>
     <script>
-
-        function deleteCate(catID) {
-            let form = `#hiddenForm${catID}`;
-            $(form).attr('action', '/admin/cat/delete');
+        function deleteCourse(courseID) {
+            let form = `#hiddenForm${courseID}`;
+            $(form).attr('action', '/admin/course/delete');
             $(form).submit();
         }
     </script>
