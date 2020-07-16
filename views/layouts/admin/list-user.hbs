@@ -6,46 +6,67 @@
 </head>
 
 <body>
+    {{>import/navbar}}
     <div class="d-flex" id="wrapper">
-        {{>import/navbar}}
         <div id="page-content-wrapper">
             <h1 class="container text-center mt-5">Customize</h1>
             <div class="container shadow p-3 bg-white rounded my-3">
                 <h1 class="text-center text-primary">Account</h1>
-                {{#if emptyList}}
-                <div>You don't have any products</div>
-                {{else}}
                 <table class="table table-hover table-striped">
                     <thead>
                         <tr class="d-flex">
                             <th class="col-1">ID</th>
-                            <th class="col-4">Fullname</th>
-                            <th class="col-2">Username</th>
-                            <th class="col-3">Permission</th>
-                            <th class="col-2">Downgrade</th>
+                            <th class="col-1">MSSV</th>
+                            <th class="col-3">Họ và tên</th>
+                            <th class="col-2">Email</th>
+                            <th class="col-2">Chuyên ngành</th>
+                            <th class="col-1">Khóa</th>
+                            <th class="col-1">Admin</th>
+                            <th class="col-1">Edit</th>
                         </tr>
                     </thead>
                     <tbody>
                         {{#each listOfUser}}
                         <div>
                             <tr class="d-flex">
-                                <td class="col-1">{{f_userID}}</td>
-                                <td class="col-4">{{f_fullname}}</td>
-                                <td class="col-2">
-                                    {{f_username}}
+                                <td class="col-1">{{id}}</td>
+                                <td class="col-1">{{mssv}}</td>
+                                <td class="col-3">{{name}}</td>
+                                <td class="col-2">{{email}}</td>
+                                <td class="col-2">{{major}}</td>
+                                <td class="col-1">{{year}}</td>
+                                <td class="col-1">
+                                    {{#ifCond permission 1}}
+                                    <i class="fas fa-check-square text-success"></i>
+                                    {{/ifCond}}
+                                    {{#ifCond permission 0}}
+                                    <i class="fas fa-times-square text-danger"></i>
+                                    {{/ifCond}}
                                 </td>
-                                <td class="col-3">
-                                    {{f_permission}}
-                                </td>
-                                <td class="col-2">
-                                    {{#ifCond f_permission 1}}
-                                    <form method="POST" id="hiddenForm{{f_userID}}">
-                                        <input type="hidden" value="{{f_userID}}" id="userID_" name="userID_">
+                                <td class="col-1">
+                                    {{#ifCond permission 1}}
+                                    {{#ifCond id 10000}}
+                                    <form method="POST" id="hiddenForm{{id}}">
+                                        <input type="hidden" value="{{id}}" id="userID_" name="userID_" disabled>
                                     </form>
-
-                                    <button type="button" class="btn btn-danger" onclick="giangcap({{f_userID}})">
+                                    <button type="button" class="btn btn-danger" onclick="giangcap({{id}})" disabled>
                                         <i class="fas fa-arrow-alt-circle-down"></i>
-
+                                    </button>
+                                    {{else}}
+                                    <form method="POST" id="hiddenForm{{id}}">
+                                        <input type="hidden" value="{{id}}" id="userID_" name="userID_">
+                                    </form>
+                                    <button type="button" class="btn btn-danger" onclick="giangcap({{id}})">
+                                        <i class="fas fa-arrow-alt-circle-down"></i>
+                                    </button>
+                                    {{/ifCond}}
+                                    {{/ifCond}}
+                                    {{#ifCond permission 0}}
+                                    <form method="POST" id="hiddenForm{{id}}">
+                                        <input type="hidden" value="{{id}}" id="userID_" name="userID_">
+                                    </form>
+                                    <button type="button" class="btn btn-success" onclick="thangcap({{id}})">
+                                        <i class="fas fa-arrow-alt-circle-up"></i>
                                     </button>
                                     {{/ifCond}}
                                 </td>
@@ -54,16 +75,21 @@
                         {{/each}}
                     </tbody>
                 </table>
-                {{/if}}
                 <hr>
             </div>
         </div>
     </div>
     <script>
-        function giangcap(f_userID) {
-            let form = `#hiddenForm${f_userID}`;
+        function giangcap(id) {
+            let form = `#hiddenForm${id}`;
             console.log("hi");
             $(form).attr('action', '/admin/down-level');
+            $(form).submit();
+        }
+        function thangcap(id) {
+            let form = `#hiddenForm${id}`;
+            console.log("hi");
+            $(form).attr('action', '/admin/up-level');
             $(form).submit();
         }
     </script>
