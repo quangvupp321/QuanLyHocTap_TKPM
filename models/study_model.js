@@ -12,7 +12,7 @@ const usertable = 'user_';
 const idField = 'id';
 
 module.exports = {
-    allProducts: async () => {
+    allStudy: async () => {
         const sql = `SELECT * FROM ${tbName}`;
         const [rows,err] = await run(db.load(sql));
         if (err)
@@ -21,26 +21,9 @@ module.exports = {
         }
         return rows;
     },
-    allProductslimit: async (page,order) => {
-        let sql = `SELECT * 
-        FROM ??  
-        GROUP BY ProID 
-        ORDER BY ?? DESC
-        limit ?,6;`;
-        console.log("tututu")
-        console.log(page)
-        const params = [tbName,order,(page-1)*6];
-        sql = db.mysql.format(sql,params);
-        // console.log(sql)
-        const [rows,err] = await run(db.load(sql));
-        if (err)
-        {
-            throw err;
-        }
-        return rows;
-    },
-    productByProId: async id => {
-        const sql = `SELECT * FROM ${tbName} WHERE ProID=${id}`;
+
+    getStudyById: async id => {
+        const sql = `SELECT * FROM ${tbName} WHERE id=${id}`;
         const [rows,err] = await run(db.load(sql));
         if (err)
         {
@@ -56,28 +39,144 @@ module.exports = {
         }
     },
 
-    getProductByCatId: async CatID =>{
-        let sql = `SELECT p.*
-                FROM ?? as subcate, ?? as p 
-                WHERE subcate.SubCatID = p.SubCatID and ?? = ?`;
-        const params = [subcatetable, tbName,'categoryID', CatID];
-        sql = db.mysql.format(sql,params);
-        const [wList, error] = await run(db.load(sql));
-        if (error)
+    getStudyByCourseId: async CourseID =>{
+        const sql = `SELECT *
+                FROM ${tbName}
+                WHERE course = ${CourseID}`;
+        const [rows,err] = await run(db.load(sql));
+        if (err)
         {
-            throw error;
+            throw err;
         } 
-        if (wList.length > 0)
+        if (rows.length > 0)
         {
-            return wList;
+            return rows;
+        }
+        return null;
+    },
+
+    getStudyByUserid: async userid =>{
+        const sql = `SELECT *
+                FROM ${tbName}
+                WHERE user = ${userid}`;
+        const [rows,err] = await run(db.load(sql));
+        if (err)
+        {
+            throw err;
+        } 
+        if (rows.length > 0)
+        {
+            return rows;
+        }
+        return null;
+    },
+
+    getCourseByUserid: async userid =>{
+        const sql = `SELECT cou.*, m.name as majorname, stu.id as studyid, stu.qualify as qualify
+                FROM ${tbName} as stu, ${tbCourse} as cou, ${tbMajor} as m
+                WHERE stu.user = ${userid} and stu.course = cou.id and cou.major = m.id`;
+        const [rows,err] = await run(db.load(sql));
+        if (err)
+        {
+            throw err;
+        } 
+        if (rows.length > 0)
+        {
+            return rows;
+        }
+        return null;
+    },
+
+    getCourseByUseridQualify: async (userid, qualify) =>{
+        const sql = `SELECT cou.*, m.name as majorname, stu.id as studyid
+                FROM ${tbName} as stu, ${tbCourse} as cou, ${tbMajor} as m
+                WHERE stu.user = ${userid} and stu.course = cou.id and cou.major = m.id and stu.qualify = ${qualify}`;
+        const [rows,err] = await run(db.load(sql));
+        if (err)
+        {
+            throw err;
+        } 
+        if (rows.length > 0)
+        {
+            return rows;
+        }
+        return null;
+    },
+
+    getCourseByUseridNotQualify: async (userid, qualify) =>{
+        const sql = `SELECT cou.*, m.name as majorname, stu.id as studyid
+                FROM ${tbName} as stu, ${tbCourse} as cou, ${tbMajor} as m
+                WHERE stu.user = ${userid} and stu.course = cou.id and cou.major = m.id and stu.qualify <> ${qualify}`;
+        const [rows,err] = await run(db.load(sql));
+        if (err)
+        {
+            throw err;
+        } 
+        if (rows.length > 0)
+        {
+            return rows;
+        }
+        return null;
+    },
+
+    getCourseByUseridNotIn: async userid =>{
+        const sql = `
+        SELECT DISTINCT cou.*, m.name as majorname
+        FROM study as stu, course as cou, major as m
+        WHERE stu.user = ${userid} and cou.major = m.id and cou.id not in (
+        SELECT course
+        FROM study
+        WHERE user = ${userid}
+        ORDER BY cou.major
+        )`;
+        const [rows,err] = await run(db.load(sql));
+        if (err)
+        {
+            throw err;
+        } 
+        if (rows.length > 0)
+        {
+            return rows;
+        }
+        return null;
+    },
+
+    getCourseByUseridSemesterSchoolyear: async (userid, semester, schoolyear) =>{
+        const sql = `SELECT cou.*, m.name as majorname, stu.id as studyid
+                FROM ${tbName} as stu, ${tbCourse} as cou, ${tbMajor} as m
+                WHERE stu.user = ${userid} and stu.course = cou.id and stu.semester = ${semester} and stu.schoolyear = ${schoolyear} and cou.major = m.id`;
+        const [rows,err] = await run(db.load(sql));
+        if (err)
+        {
+            throw err;
+        } 
+        if (rows.length > 0)
+        {
+            return rows;
+        }
+        return null;
+    },
+
+    getCourseByUseridSchoolyear: async (userid, schoolyear) =>{
+        const sql = `SELECT cou.*, m.name as majorname, stu.id as studyid
+                FROM ${tbName} as stu, ${tbCourse} as cou, ${tbMajor} as m
+                WHERE stu.user = ${userid} and stu.course = cou.id and stu.schoolyear = ${schoolyear} and cou.major = m.id`;
+        const [rows,err] = await run(db.load(sql));
+        if (err)
+        {
+            throw err;
+        } 
+        if (rows.length > 0)
+        {
+            return rows;
         }
         return null;
     },
 
     getAllUserByCourseId: async CourseID =>{
-        let sql = `SELECT stu.*
+        let sql = `SELECT u.*
                 FROM ?? as u, ?? as stu 
-                WHERE u.mssv = stu.mssv and stu.?? = ?`;
+                WHERE u.id = stu.user and stu.?? = ?`;
         const params = [tbUser, tbName,'course', CourseID];
         sql = db.mysql.format(sql,params);
         const [rows, error] = await run(db.load(sql));
@@ -91,6 +190,60 @@ module.exports = {
         }
         return null;
     },
+
+    getStudyByUseridSemesterSchoolyear: async (userid, semester, schoolyear) =>{
+        const sql = `SELECT *
+                FROM ${tbName}
+                WHERE user = ${userid} and semester = ${semester} and schoolyear = ${schoolyear}`;
+        const [rows,err] = await run(db.load(sql));
+        if (err)
+        {
+            throw err;
+        } 
+        if (rows.length > 0)
+        {
+            return rows;
+        }
+        return null;
+    },
+
+    getAllUserByCourseIdSemesterSchoolyear: async (CourseID, semester, schoolyear) =>{
+        let sql = `SELECT u.*
+                FROM ?? as u, ?? as stu 
+                WHERE u.id = stu.user and stu.?? = ? and stu.semester = ? and stu.schoolyear = ?`;
+        const params = [tbUser, tbName,'course', CourseID, semester, schoolyear];
+        sql = db.mysql.format(sql,params);
+        const [rows, error] = await run(db.load(sql));
+        if (error)
+        {
+            throw error;
+        } 
+        if (rows.length > 0)
+        {
+            return rows;
+        }
+        return null;
+    },
+
+    addNewStudy: async entity =>
+    {
+        const [newRow,err] = await run(db.add(tbName,entity));
+        if (err)
+        {
+            throw err;
+        }
+        else{
+            return newRow;
+        }
+    },
+
+
+
+
+
+
+
+
 
     getAllProductBySubCatId: async SubCatID =>{
         let sql = `SELECT p.*

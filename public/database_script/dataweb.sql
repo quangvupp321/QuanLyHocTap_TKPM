@@ -73,7 +73,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `score` WRITE;
 /*!40000 ALTER TABLE `score` DISABLE KEYS */;
-INSERT INTO `score` VALUES (1,1,'GK',9,30),(2,1,'CK',9,70),(3,2,'GK',10,30),(4,2,'CK',10,70);
+INSERT INTO `score` VALUES (1,1,'GK',9,30),(2,1,'CK',9,70),(3,2,'GK',10,30),(4,2,'CK',10,70),(5,5,'CK',7,100);
 /*!40000 ALTER TABLE `score` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -83,7 +83,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `study` WRITE;
 /*!40000 ALTER TABLE `study` DISABLE KEYS */;
-INSERT INTO `study` VALUES (1,17001,1,2,19),(2,17002,1,2,19),(3,17001,2,2,19),(4,17002,2,2,19),(5,18021,6,1,19),(6,19031,7,1,19),(7,16051,9,2,18);
+INSERT INTO `study` VALUES (1,10000,1,2,19, 0),(2,10006,1,2,19, 0),(3,10000,2,2,19, 0),(4,10006,2,2,19, 0),(5,10000,6,1,19,1),(6,10006,7,1,19, 0),(7,10006,9,2,18, 0);
 /*!40000 ALTER TABLE `study` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -93,7 +93,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (10000,'admin','admin','admin@gmail.com','$2b$10$ttqO.BtyfiDajFdCJM/HM.rhdX69qGxGugAHHqb75r6PKNTextv0K',0,NULL,1),(10001,'171001','Hồ Đình Minh','minh@gmail.com','123',2,2017,0),(10002,'17003','Quang Vũ','vu@gmail.com','123',2,2017,0),(10003,'18021','Nguyễn Văn A','a@gmail.com','123',0,2018,0),(10004,'19031','Trần Thị B','b@gmail.com','123',0,2019,0),(10005,'16051','Phan Văn C','c@gmail.com','123',1,2016,0);
+INSERT INTO `user` VALUES (10000,'admin','admin','admin@gmail.com','$2b$10$ttqO.BtyfiDajFdCJM/HM.rhdX69qGxGugAHHqb75r6PKNTextv0K',0,NULL,1),(10001,'171001','Hồ Đình Minh','minh@gmail.com','123',2,2017,0),(10002,'17003','Quang Vũ','vu@gmail.com','123',2,2017,0),(10003,'18021','Nguyễn Văn A','a@gmail.com','123',0,2018,0),(10004,'19031','Trần Thị B','b@gmail.com','123',0,2019,0),(10005,'16051','Phan Văn C','c@gmail.com','123',1,2016,0),(10006,'user','user','user@gmail.com','$2b$10$ttqO.BtyfiDajFdCJM/HM.rhdX69qGxGugAHHqb75r6PKNTextv0K',2,2017,0);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

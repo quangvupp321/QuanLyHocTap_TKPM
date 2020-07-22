@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {{>import/head}}
+</head>
+
+<body>
+    {{>import/navbar}}
+    <div class="d-flex" id="wrapper">
+
+        <div id="page-content-wrapper">
+            <h1 class="container text-center mt-5">Add</h1>
+            <div class="shadow p-3 bg-white rounded my-3">
+                <div class="mx-5 pb-5 text-dark">
+                    <div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="control-label no-lh" for="schoolyear">
+                                    Năm học
+                                </label>
+                                <div class="form-control">
+                                    <select id="schoolyear" name="schoolyear">
+                                        {{#each total_schoolyears}}
+                                        <option value="{{id}}">
+                                            {{schoolyear}}
+                                        </option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="control-label no-lh" for="semester">
+                                    Học kì
+                                </label>
+                                <div class="form-control">
+                                    <select id="semester" name="semester">
+                                        {{#each total_semesters}}
+                                        <option value="{{id}}">
+                                            Học kì {{semester}}
+                                        </option>
+
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <h2 class="text-center text-primary">Các học phần đã rớt</h2>
+                        <table class="table table-hover table-striped">
+                            <thead>
+                                <tr class="d-flex">
+                                    <th class="col-1">CourseID</th>
+                                    <th class="col-3">Chuyên ngành</th>
+                                    <th class="col-4">Tên học phần</th>
+                                    <th class="col-2">Tín chỉ</th>
+                                    <th class="col-2">Thêm</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each courses}}
+                                <div>
+                                    <tr class="d-flex">
+                                        <form method="POST" action="/study/add" class="text-dark" id="hiddenForm{{id}}">
+                                            <td class="col-1">{{id}}</td>
+                                            <td class="col-3">
+                                                {{majorname}}
+                                            </td>
+                                            <td class="col-4">
+                                                {{name}}
+                                            </td>
+                                            <td class="col-2">
+                                                {{credit}}
+                                            </td>
+                                            <td class="col-2">
+                                                <button type="button" class="btn btn-success"
+                                                    onclick="addCourse({{id}})">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                            </td>
+                                        </form>
+                                    </tr>
+                                </div>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                        <hr class="my-5">
+                        <h2 class="text-center text-primary">Các học phần chưa học</h2>
+                        <table class="table table-hover table-striped">
+                            <thead>
+                                <tr class="d-flex">
+                                    <th class="col-1">CourseID</th>
+                                    <th class="col-3">Chuyên ngành</th>
+                                    <th class="col-4">Tên học phần</th>
+                                    <th class="col-2">Tín chỉ</th>
+                                    <th class="col-2">Thêm</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each courses_chuahoc}}
+                                <div>
+                                    <tr class="d-flex">
+                                        <form method="POST" action="/study/add" class="text-dark" id="hiddenForm{{id}}">
+                                            <td class="col-1">{{id}}</td>
+                                            <td class="col-3">
+                                                {{majorname}}
+                                            </td>
+                                            <td class="col-4">
+                                                {{name}}
+                                            </td>
+                                            <td class="col-2">
+                                                {{credit}}
+                                            </td>
+                                            <td class="col-2">
+                                                <input type="hidden" name="courseid" id="courseid" value="{{id}}">
+                                                <input type="hidden" name="semesterid" id="semesterid" value="1">
+                                                <input type="hidden" name="schoolyearid" id="schoolyearid" value="2016">
+                                                <button type="button" class="btn btn-success"
+                                                    onclick="addCourse({{id}})">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                            </td>
+                                        </form>
+                                    </tr>
+                                </div>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                        <hr>
+                        <div class="float-right mx-2">
+                            <a href="/study/course">
+                                <button type="button" class="btn btn-danger">
+                                    <i class="fas fa-arrow-left"></i>
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            function addCourse(courseID) {
+                let form = `#hiddenForm${courseID}`;
+                $(form).attr('action', '/study/add');
+                var semester = $(`#semester`).children("option:selected").val();
+                var schoolyear = $(`#schoolyear`).children("option:selected").val();
+                $(`#semesterid`).attr('value', `${semester}`);
+                $(`#schoolyearid`).attr('value', `${schoolyear}`);
+                $(form).submit();
+            }
+        </script>
+        {{> import/b4_script}}
+</body>
+
+</html>

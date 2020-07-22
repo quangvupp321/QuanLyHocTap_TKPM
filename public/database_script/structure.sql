@@ -132,10 +132,11 @@ DROP TABLE IF EXISTS `study`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `study` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `mssv` int DEFAULT NULL,
+  `user` int DEFAULT NULL,
   `course` int DEFAULT NULL,
   `semester` int DEFAULT NULL,
   `schoolyear` int DEFAULT NULL,
+  `qualify` int DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
