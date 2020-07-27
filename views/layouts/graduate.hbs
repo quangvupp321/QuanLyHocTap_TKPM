@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {{>import/head}}
+</head>
+
+<body>
+    {{>import/navbar}}
+    <div class="d-flex" id="wrapper">
+
+        <div id="page-content-wrapper">
+            <div class="container shadow p-3 bg-white rounded my-5">
+                <h1 class="text-center text-primary">Chương trình đào tạo</h1>
+
+                <div class="float-right mx-2">
+                    <button type="button" class="btn btn-primary" onClick="goToYear()">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                <div class="float-right mx-2 row">
+                    <div class="form-group col-xs-6">
+                        <div class="form-control">
+                            <select id="year" name="year">
+                                {{#each total_year}}
+                                <option value="{{id}}" {{#ifCond ../year_ id}} selected="selected" {{/ifCond}}
+                                    {{#if valid}} {{else}} disabled {{/if}}>
+                                    {{year}}
+                                </option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr class="d-flex">
+                            <th class="col-6">Chuyên ngành</th>
+                            <th class="col-1">Khóa</th>
+                            <th class="col-3">Tín chỉ chuyên ngành</th>
+                            <th class="col-2">Download</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each total_major}}
+
+                        <div>
+                            <tr class="d-flex  {{#if isSelected}} bg-dark font-weight-bold text-white {{else}} text-dark {{/if}}">
+                                <td class="col-6 font-weight-bold">
+                                    {{major}}
+                                </td>
+                                <td class="col-1">
+                                    {{../year_}}
+                                </td>
+                                <td class="col-3">
+                                    {{credit}}
+                                </td>
+                                <td class="col-2">
+                                    <a href="graduate/{{../year_}}/{{id}}.pdf"
+                                        download="ChuongTrinhDaoTao_{{name_eng}}_{{../year_}}">
+                                        <button class="btn btn-success">
+                                            <i class="far fa-arrow-circle-down"></i>
+                                        </button>
+                                    </a>
+                                </td>
+                            </tr>
+                        </div>
+                        {{/each}}
+                    </tbody>
+                </table>
+                <hr>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function goToYear() {
+            var year_valueSelected = $('#year').find(":selected").val();
+            window.location.href = `?year=${year_valueSelected}`;
+        }
+    </script>
+    {{> import/b4_script}}
+</body>
+
+</html>

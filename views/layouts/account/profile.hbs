@@ -17,7 +17,6 @@
                 <a class="btn btn-info mx-1" href="/admin/course">Quản lý học phần</a>
                 <a class="btn btn-warning mx-1" style="color: white;" href="/admin/major">Quản lý Chuyên ngành</a>
             </nav>
-            {{else if isBidder}}
             {{else}}
             {{/if}}
             <form class="profile_box" onsubmit="return changePassword(this)" action="/account/profile" method="POST"

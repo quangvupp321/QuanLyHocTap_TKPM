@@ -61,6 +61,7 @@ app.use('/admin/up-level', express.static(__dirname + '/public'));
 app.use('/admin/up-level', express.static(__dirname + '/public'));
 app.use('/seller/add-descript/', express.static(__dirname + '/public'));
 app.use('/study', express.static(__dirname + '/public'));
+app.use('/graduate', express.static(__dirname + '/public'));
 
 //Điều hướng về controller
 app.use('/', require('./controllers/index_controller'));
@@ -80,7 +81,8 @@ app.use('/seller', require('./controllers/seller_controller'));
 app.use('/admin', require('./controllers/admin_controller'));
 //Điều hướng về study_controller các chức năng thêm/xóa/sửa của sinh viên
 app.use('/study', require('./controllers/study_controller'));
-
+//Điều hướng về study_controller các chức năng của chương trình đào tạo
+app.use('/graduate', require('./controllers/graduate_controller'));
 
 
 
