@@ -34,7 +34,7 @@
 
                 </div>
                 <table class="table table-hover">
-                    <thead>
+                    <thead class="black white-text">
                         <tr class="d-flex">
                             <th class="col-6">Chuyên ngành</th>
                             <th class="col-1">Khóa</th>
@@ -46,7 +46,7 @@
                         {{#each total_major}}
 
                         <div>
-                            <tr class="d-flex  {{#if isSelected}} bg-dark font-weight-bold text-white {{else}} text-dark {{/if}}">
+                            <tr class="d-flex  {{#if isSelected}} young-passion-gradient font-weight-bold text-white {{else}} text-dark {{/if}}">
                                 <td class="col-6 font-weight-bold">
                                     {{major}}
                                 </td>
@@ -59,7 +59,7 @@
                                 <td class="col-2">
                                     <a href="graduate/{{../year_}}/{{id}}.pdf"
                                         download="ChuongTrinhDaoTao_{{name_eng}}_{{../year_}}">
-                                        <button class="btn btn-success">
+                                        <button class="btn {{#if isSelected}} btn-success {{else}} btn-success {{/if}}">
                                             <i class="far fa-arrow-circle-down"></i>
                                         </button>
                                     </a>

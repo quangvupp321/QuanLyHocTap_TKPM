@@ -9,19 +9,19 @@
   {{>import/navbar}}
   <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
     <div class="col-md-5 p-lg-5 mx-auto my-5">
-      <h1 class="display-2 font-weight-light text-dark">Welcome</h1>
-      <p class="lead font-weight-bold text-dark">Chào mừng bạn đến với trang web Quản lý học tập</p>
+      <h1 class="display-2 font-weight-light text-dark animated bounceInDown">Welcome</h1>
+      <h4 class="font-weight-bold text-dark animated flipInX delay-1s">Chào mừng bạn đến với website Quản lý học tập</h4>
     </div>
     <div class="product-device shadow-sm d-none d-md-block"></div>
     <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
   </div>
 
-  <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
+  <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3  animated fadeInUp">
     <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
       <div class="my-3 py-3">
         <h2 class="display-5">Quản lý học phần</h2>
         <p class="lead">Bạn có thể thêm, xóa, sửa các học phần môn học vào học kì</p>
-        <a class="btn btn-outline-secondary" href="/study/course">Quản lý học phần</a>
+        <a class="btn-floating btn-lg purple-gradient" href="/study/course ">Quản lý học phần</a>
       </div>
       <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
     </div>
@@ -29,7 +29,7 @@
       <div class="my-3 py-3">
         <h2 class="display-5">Quản lý điểm học tập</h2>
         <p class="lead">Bạn có thể thêm, xóa, sửa các điểm của học phần và xem điểm tổng kết</p>
-        <a class="btn btn-outline-secondary" href="/score">Quản lý điểm học tập</a>
+        <a class="btn-floating btn-lg purple-gradient" href="/score/course ">Quản lý điểm học tập</a>
       </div>
       <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
     </div>
@@ -40,7 +40,7 @@
       <div class="my-3 p-3">
         <h2 class="display-5">Chương trình đào tạo</h2>
         <p class="lead">Xem chương trình đào tạo theo khóa và chuyên ngành</p>
-        <a class="btn btn-outline-secondary" href="#">Chương trình đào tạo</a>
+        <a class="btn-floating btn-lg purple-gradient" href="/graduate ">Chương trình đào tạo</a>
       </div>
       <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
     </div>
@@ -48,44 +48,46 @@
       <div class="my-3 py-3">
         <h2 class="display-5">Tùy chỉnh</h2>
         <p class="lead">Chỉnh sửa thông tin cá nhân, quản lý tác vụ Admin</p>
-        <a class="btn btn-outline-secondary" href="/account/profile">Tùy chỉnh</a>
+        <a class="btn-floating btn-lg purple-gradient" href="/account/profile">Tùy chỉnh</a>
       </div>
       <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
     </div>
   </div>
   <footer class="container py-5">
-  <div class="row">
-    <div class="col-12 col-md">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mb-2" role="img" viewBox="0 0 24 24"><title>Product</title><circle cx="12" cy="12" r="10"/><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"/></svg>
-      <small class="d-block mb-3 text-muted">&copy; 2020-2020</small>
+    <div class="row">
+      <div class="col-12 col-md">
+        <a href="/">
+          <i class="far fa-book fa-lg"></i>
+        </a>
+        <small class="d-block mb-3 text-muted">&copy; 2020-2020</small>
+      </div>
+      <div class="col-6 col-md">
+        <h5>Tính năng chính</h5>
+        <ul class="list-unstyled text-small">
+          <li><a class="link-secondary" href="/study/course">Quản lý học phần</a></li>
+          <li><a class="link-secondary" href="/score">Quản lý điểm học tập</a></li>
+          <li><a class="link-secondary" href="/graduate">Chương trình đào tạo</a></li>
+          <li><a class="link-secondary" href="/account/profile">Tùy chỉnh</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md">
+        <h5>Thành viên</h5>
+        <ul class="list-unstyled text-small">
+          <li><a class="link-secondary" href="https://www.facebook.com/quangvupp321/">Hà Phùng Quang Vũ</a></li>
+          <li><a class="link-secondary" href="https://www.facebook.com/minhmapmo69">Hồ Đình Minh</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md">
+        <h5>About</h5>
+        <ul class="list-unstyled text-small">
+          <li><a class="link-secondary" href="/about">Team</a></li>
+          <li><a class="link-secondary" href="/contact">Contact</a></li>
+          <li><a class="link-secondary" href="#">Privacy</a></li>
+          <li><a class="link-secondary" href="#">Terms</a></li>
+        </ul>
+      </div>
     </div>
-    <div class="col-6 col-md">
-      <h5>Tính năng chính</h5>
-      <ul class="list-unstyled text-small">
-        <li><a class="link-secondary" href="/study/course">Quản lý học phần</a></li>
-        <li><a class="link-secondary" href="/score">Quản lý điểm học tập</a></li>
-        <li><a class="link-secondary" href="#">Chương trình đào tạo</a></li>
-        <li><a class="link-secondary" href="/account/profile">Tùy chỉnh</a></li>
-      </ul>
-    </div>
-    <div class="col-6 col-md">
-      <h5>Thành viên</h5>
-      <ul class="list-unstyled text-small">
-        <li><a class="link-secondary" href="https://www.facebook.com/quangvupp321/">Hà Phùng Quang Vũ</a></li>
-        <li><a class="link-secondary" href="https://www.facebook.com/minhmapmo69">Hồ Đình Minh</a></li>
-      </ul>
-    </div>
-    <div class="col-6 col-md">
-      <h5>About</h5>
-      <ul class="list-unstyled text-small">
-        <li><a class="link-secondary" href="#">Team</a></li>
-        <li><a class="link-secondary" href="#">Locations</a></li>
-        <li><a class="link-secondary" href="#">Privacy</a></li>
-        <li><a class="link-secondary" href="#">Terms</a></li>
-      </ul>
-    </div>
-  </div>
-</footer>
+  </footer>
   {{> import/b4_script}}
 </body>
 
