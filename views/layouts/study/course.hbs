@@ -50,9 +50,8 @@
                         <tr class="d-flex">
                             <th class="col-1">CourseID</th>
                             <th class="col-3">Chuyên ngành</th>
-                            <th class="col-3">Tên học phần</th>
+                            <th class="col-4">Tên học phần</th>
                             <th class="col-1">Tín chỉ</th>
-                            <th class="col-1">Điểm trung bình</th>
                             <th class="col-1">Đạt</th>
                             <th class="col-2">Chi tiết</th>
                         </tr>
@@ -65,14 +64,11 @@
                                 <td class="col-3">
                                     {{majorname}}
                                 </td>
-                                <td class="col-3">
+                                <td class="col-4">
                                     {{name}}
                                 </td>
                                 <td class="col-1">
                                     {{credit}}
-                                </td>
-                                <td class="col-1">
-                                    {{dtb}}
                                 </td>
                                 <td class="col-1">
                                     {{qualify}}
@@ -91,11 +87,10 @@
                             <tr class="d-flex">
                                 <td class="col-1"></td>
                                 <td class="col-3"></td>
-                                <td class="col-3">
+                                <td class="col-4">
                                     <div class="font-weight-bold text-right mx-5">Tổng</div>
                                 </td>
                                 <td class="col-1">{{courses_credit}}</td>
-                                <td class="col-1">{{courses_dtb}}</td>
                                 <td class="col-1">{{qualify_count}}/{{course_count}}</td>
                                 <td class="col-2">
                                     <a href="/study/add">
