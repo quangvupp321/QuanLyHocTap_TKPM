@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {{>import/head}}
+</head>
+
+<body>
+    {{>import/navbar}}
+    <div class="d-flex" id="wrapper">
+
+        <div id="page-content-wrapper">
+            <div class="container shadow p-3 bg-white rounded my-3">
+                {{#each course_info}}
+                <h1 class="text-center text-primary">{{coursename}}</h1>
+                <table class="table table-striped">
+                    <thead>
+                        <tr class="d-flex">
+                            <th class="col-5">Tên chuyên ngành</th>
+                            <th class="col-1">Tín chỉ</th>
+                            <th class="col-1">Học kì</th>
+                            <th class="col-2">Năm học</th>
+                            <th class="col-1">Đạt</th>
+                            <th class="col-2">Số lần học</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="d-flex">
+                            <td class="col-5">{{majorname}}</td>
+                            <td class="col-1">{{coursecredit}}</td>
+                            <td class="col-1">{{semester}}</td>
+                            <td class="col-2">{{schoolyearname}}</td>
+                            <td class="col-1">{{qualify}}</td>
+                            <td class="col-2">{{../count}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                {{/each}}
+                <table class="table table-hover table-striped">
+                    <thead class="black white-text">
+                        <tr class="d-flex">
+                            <th class="col-1">ScoreID</th>
+                            <th class="col-4">Tên cột điểm</th>
+                            <th class="col-2">Phần trăm (/100)</th>
+                            <th class="col-2">Số điểm (/10)</th>
+                            <th class="col-3">Chỉnh sửa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each scores}}
+                        <div>
+                            <tr class="d-flex">
+                                <td class="col-1">{{id}}</td>
+                                <form method="POST" action="/score/edit" id="hiddenForm{{id}}">
+
+                                    <td class="col-4">
+                                        <div class="form-group">
+                                            <div class="input-wrap">
+                                                <input type="text" name="scorename" class="form-control" id="scorename"
+                                                    value="{{name}}" placeholder="Tên cột điểm">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-2">
+                                        <div class="form-group">
+                                            <div class="input-wrap">
+                                                <input type="number" name="scorepercent" class="form-control"
+                                                    id="scorepercent" max="100" min="0" value="{{percent}}"
+                                                    placeholder="Phần trăm">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-2">
+                                        <div class="form-group">
+                                            <div class="input-wrap">
+                                                <input type="number" name="scorenum" class="form-control" id="scorenum"
+                                                    min="0" max="10" step="0.01" value="{{score_num}}"
+                                                    placeholder="Điểm">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-3">
+                                        <input type="hidden" name="studyid" id="studyid" value="{{../studyID}}">
+                                        <input type="hidden" name="scoreid" id="scoreid" value="{{id}}">
+                                        <a href="#">
+                                            <button type="submit" class="btn btn-warning">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                        </a>
+                                        <button type="button" class="btn btn-danger" onclick="deleteScore({{id}})">
+                                            <i class="fad fa-trash-alt"></i>
+                                        </button>
+
+                                    </td>
+                                </form>
+                            </tr>
+                        </div>
+                        {{/each}}
+                        <div>
+                            <tr class="d-flex">
+                                <form method="POST" action="/score/add">
+                                <input type="hidden" name="studyid" id="studyid" value="{{studyID}}">
+                                    <td class="col-1"></td>
+                                    <td class="col-4">
+                                        <div class="form-group">
+                                            <div class="input-wrap">
+                                                <input type="text" name="scorename" class="form-control" id="scorename"
+                                                    value="" placeholder="Tên cột điểm">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-2">
+                                        <div class="form-group">
+                                            <div class="input-wrap">
+                                                <input type="number" name="scorepercent" class="form-control"
+                                                    id="scorepercent" value="0" placeholder="Phần trăm" max="100" min="0">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-2">
+                                        <div class="form-group">
+                                            <div class="input-wrap">
+                                                <input type="number" name="scorenum" class="form-control" id="scorenum"
+                                                    value="0" placeholder="Điểm" max="10" min="0" step="0.01">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-3">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                </form>
+                                </td>
+                            </tr>
+                        </div>
+                    </tbody>
+                </table>
+                <hr>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        function deleteScore(scoreID) {
+            let form = `#hiddenForm${scoreID}`;
+            $(form).attr('action', '/score/delete');
+            $(form).submit();
+        }
+    </script>
+    {{> import/b4_script}}
+    <script src="./assets/js/watch-list.js"></script>
+</body>
+
+</html>

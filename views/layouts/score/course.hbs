@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {{>import/head}}
+</head>
+
+<body>
+    {{>import/navbar}}
+    <div class="d-flex" id="wrapper">
+
+        <div id="page-content-wrapper">
+            <h1 class="container text-center mt-5">Customize</h1>
+            <div class="mx-5 shadow p-3 bg-white rounded my-3">
+                <h1 class="text-center text-primary">Học phần</h1>
+                <div class="float-right mx-2">
+                    <button type="button" class="btn btn-primary" onClick="goToSemesterSchoolyear()">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                <div class="float-right mx-2 row">
+                    <div class="form-group col-xs-6">
+                        <div class="form-control">
+                            <select id="schoolyear" name="schoolyear">
+                                {{#each total_schoolyears}}
+                                <option value="{{id}}" {{#ifCond ../schoolyear_ id}} selected="selected" {{/ifCond}}>
+                                    {{schoolyear}}
+                                </option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-6">
+                        <div class="form-control">
+                            <select id="semester" name="semester">
+                                {{#each total_semesters}}
+                                <option value="{{id}}" {{#ifCond ../semester_ semester}} selected="selected"
+                                    {{/ifCond}}>
+                                    {{#ifCond id 0}} {{else}} Học kì {{/ifCond}} {{semester}}
+                                </option>
+
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+                <table class="table table-hover table-striped">
+                    <thead class="black white-text">
+                        <tr class="d-flex">
+                            <th class="col-1">CourseID</th>
+                            <th class="col-3">Chuyên ngành</th>
+                            <th class="col-3">Tên học phần</th>
+                            <th class="col-1">Tín chỉ</th>
+                            <th class="col-1">Điểm trung bình</th>
+                            <th class="col-1">Đạt</th>
+                            <th class="col-2">Chi tiết</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each courses}}
+                        <div class="h4">
+                            <tr class="d-flex">
+                                <td class="col-1">{{id}}</td>
+                                <td class="col-3">
+                                    {{majorname}}
+                                </td>
+                                <td class="col-3">
+                                    {{name}}
+                                </td>
+                                <td class="col-1">
+                                    {{credit}}
+                                </td>
+                                <td class="col-1">
+                                    {{dtb}}
+                                </td>
+                                <td class="col-1">
+                                    {{qualify}}
+                                </td>
+                                <td class="col-2">
+                                    <a href="/score/{{studyid}}">
+                                        <button class="btn btn-info">
+                                            <i class="far fa-info-circle"></i>
+                                        </button>
+                                    </a>
+                                </td>
+                            </tr>
+                        </div>
+                        {{/each}}
+                        <div>
+                            <tr class="d-flex">
+                                <td class="col-1"></td>
+                                <td class="col-3"></td>
+                                <td class="col-3">
+                                    <div class="font-weight-bold text-right mx-5">Tổng</div>
+                                </td>
+                                <td class="col-1">{{courses_credit}}</td>
+                                <td class="col-1">{{courses_dtb}}*</td>
+                                <td class="col-1">{{qualify_count}}/{{course_count}}</td>
+                                <td class="col-2">
+                                </td>
+                            </tr>
+                        </div>
+                    </tbody>
+                </table>
+                <div>
+                    <div class="black-text">*</div>
+                    <div class="text-muted">Chỉ tính các học phần đã đạt</div>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div>
+    <script>
+        function deleteCourse(courseID) {
+            let form = `#hiddenForm${courseID}`;
+            $(form).attr('action', '/admin/course/delete');
+            $(form).submit();
+        }
+        function goToSemesterSchoolyear() {
+            var semester_valueSelected = $('#semester').find(":selected").val();
+            var schoolyear_valueSelected = $('#schoolyear').find(":selected").val();
+            if (schoolyear_valueSelected == 0) {
+                window.location.href = `?schoolyear=${schoolyear_valueSelected}&semester=${semester_valueSelected}`;
+            } else {
+                window.location.href = `?schoolyear=${schoolyear_valueSelected}&semester=${semester_valueSelected}`;
+            }
+        }
+    </script>
+    {{> import/b4_script}}
+</body>
+
+</html>

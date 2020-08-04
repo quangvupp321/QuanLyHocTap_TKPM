@@ -4,6 +4,7 @@ const tbName = 'study';
 const tbCourse = 'course';
 const tbMajor = 'major';
 const tbUser = 'user';
+const tbSchoolyear = 'schoolyear';
 
 const relativeTb = 'ordersdetails';
 const NameFields = 'number_of_bidded';
@@ -66,6 +67,48 @@ module.exports = {
         } 
         if (rows.length > 0)
         {
+            return rows;
+        }
+        return null;
+    },
+
+    checkStudyByStudyIdUserId: async (StudyId, UserId) => {
+        const sql = `SELECT *
+                    FROM ${tbName} as stu
+                    WHERE stu.id = ${StudyId} and stu.user = ${UserId}`;
+        const [rows, err] = await run(db.load(sql));
+        if (err) {
+            throw err;
+        }
+        if (rows.length > 0) {
+            return rows;
+        }
+        return null;
+    },
+
+    getCourseStudyMajorByStudyId: async StudyId => {
+        const sql = `SELECT cou.id as courseid, cou.name as coursename, cou.credit as coursecredit, maj.name as majorname, stu.semester, stu.schoolyear as schoolyearid, scho.name as schoolyearname, stu.qualify
+                    FROM ${tbName} as stu, ${tbCourse} as cou, ${tbMajor} as maj, ${tbSchoolyear} as scho
+                    WHERE stu.id = ${StudyId} and stu.course = cou.id and cou.major = maj.id and scho.id = stu.schoolyear`;
+        const [rows, err] = await run(db.load(sql));
+        if (err) {
+            throw err;
+        }
+        if (rows.length > 0) {
+            return rows;
+        }
+        return null;
+    },
+
+    getCountStudyByCourseIdUserId: async (CourseId, UserId) => {
+        const sql = `SELECT COUNT(*) as count
+                    FROM ${tbName}
+                    WHERE course = ${CourseId} and user = ${UserId}`;
+        const [rows, err] = await run(db.load(sql));
+        if (err) {
+            throw err;
+        }
+        if (rows.length > 0) {
             return rows;
         }
         return null;

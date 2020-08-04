@@ -84,47 +84,54 @@ router.get('/course', async (req, res, next) => {
         var courses_credit = 0;
         var qualify_count = 0;
         var scores, score_err;
-        for (i = 0; i < courses.length; i++) {
-            [scores, score_err] = await run(score_model.getScoreByStudyId(courses[i].studyid));
-            if (score_err) {
-                return next(score_err);
-            }
-            dtb = 0;
-            if (scores) {
-                for (j = 0; j < scores.length; j++) {
-                    dtb = dtb + scores[j].score_num * scores[j].percent / 100;
+        var course_count = 0;
+        var qualify_credit = 0;
+        if (courses) {
+            for (i = 0; i < courses.length; i++) {
+                [scores, score_err] = await run(score_model.getScoreByStudyId(courses[i].studyid));
+                if (score_err) {
+                    return next(score_err);
+                }
+                dtb = 0;
+                if (scores) {
+                    for (j = 0; j < scores.length; j++) {
+                        dtb = dtb + scores[j].score_num * scores[j].percent / 100;
+                    }
+                }
+                if (courses[i].qualify == 1) {
+                    courses_dtb = courses_dtb + dtb * courses[i].credit;
+                    qualify_credit = qualify_credit + courses[i].credit;
+                }
+                courses_credit = courses_credit + courses[i].credit;
+                dtb = Math.round(dtb * 1000) / 1000;
+                var qualify_txt = "";
+                if (courses[i].qualify == 0) {
+                    qualify_txt = "---";
+                } else if (courses[i].qualify == 1) {
+                    qualify_txt = "Đạt";
+                    qualify_count++;
+                } else if (courses[i].qualify == -1) {
+                    qualify_txt = "Rớt";
+                }
+                courses[i] = {
+                    id: courses[i].id,
+                    name: courses[i].name,
+                    major: courses[i].major,
+                    credit: courses[i].credit,
+                    qualify: qualify_txt,
+                    majorname: courses[i].majorname,
+                    studyid: courses[i].studyid,
+                    dtb: dtb,
                 }
             }
-            courses_dtb = courses_dtb + dtb * courses[i].credit;
-            courses_credit = courses_credit + courses[i].credit;
-            dtb = Math.round(dtb * 1000) / 1000;
-            var qualify_txt = "";
-            if (courses[i].qualify == 0) {
-                qualify_txt = "---";
-            } else if (courses[i].qualify == 1) {
-                qualify_txt = "Đạt";
-                qualify_count++;
-            } else if (courses[i].qualify == -1) {
-                qualify_txt = "Rớt";
-            }
-            courses[i] = {
-                id: courses[i].id,
-                name: courses[i].name,
-                major: courses[i].major,
-                credit: courses[i].credit,
-                qualify: qualify_txt,
-                majorname: courses[i].majorname,
-                studyid: courses[i].studyid,
-                dtb: dtb,
-            }
+            courses_dtb = courses_dtb / qualify_credit;
+            courses_dtb = Math.round(courses_dtb * 1000) / 1000;
+            course_count = courses.length;
         }
-        courses_dtb = courses_dtb / courses_credit;
-        courses_dtb = Math.round(courses_dtb * 1000) / 1000;
-        let course_count = courses.length;
         //B2: render to web
-        res.render('./layouts/study/course', {
-            title: 'Study-Course',
-            layout: './study/course',
+        res.render('./layouts/score/course', {
+            title: 'Score-Course',
+            layout: './score/course',
             courses,
             total_schoolyears,
             total_semesters,
@@ -138,7 +145,7 @@ router.get('/course', async (req, res, next) => {
     }
 });
 
-router.get('/add', async (req, res, next) => {
+router.get('/:studyid', async (req, res, next) => {
     if (!req.user) {
         console.log("Not sign in!!");
         return res.redirect('/user/signin');
@@ -149,80 +156,46 @@ router.get('/add', async (req, res, next) => {
             return next(usererr);
         }
 
-        //B1: get all category list
-        const [schoolyears, syerr] = await run(schoolyear_model.allSchoolyear());
-        if (syerr) {
-            return next(syerr);
-        }
-        let total_schoolyears = [];
-        for (i = 16; i <= 19; i++) {
-            total_schoolyears[i - 16] = {
-                id: i,
-                schoolyear: schoolyears[i - 16].name,
-            }
-        }
-        let total_semesters = [];
-        for (i = 1; i <= 3; i++) {
-            total_semesters[i - 1] = {
-                id: i,
-                semester: i,
-            }
+        const studyID = parseInt(req.params.studyid);
+
+        const [checkStudy, cstuerr] = await run(study_model.checkStudyByStudyIdUserId(studyID, userID));
+        if (cstuerr) {
+            return next(cstuerr);
         }
 
-        const [courses_rot, course_rot_err] = await run(study_model.getCourseByUseridQualify(userID, -1));
-        if (course_rot_err) {
-            return next(course_rot_err);
+        if (!checkStudy) {
+            let messenge = "Môn học không thuộc user này";
+            console.log(messenge);
+            return res.redirect('/score/course');
         }
-        const [courses_chuahoc, course_chuahoc_err] = await run(study_model.getCourseByUseridNotIn(userID));
-        if (course_chuahoc_err) {
-            return next(course_chuahoc_err);
+
+        const [course_info, couerr] = await run(study_model.getCourseStudyMajorByStudyId(studyID));
+        if (couerr) {
+            return next(couerr);
         }
-        const [all_majors, merr] = await run(major_model.allMajor());
-        if (merr) {
-            return next(merr);
+        console.log(course_info);
+
+        const [scores, scoerr] = await run(score_model.getScoreByStudyId(studyID));
+        if (scoerr) {
+            return next(scoerr);
         }
-        var total_cous = [];
-        var courses_of_major, comerr;
-        for (i = 0; i < all_majors.length; i++) {
-            let [courses_of_major, comerr] = await run(major_model.getCourseByMajorID(all_majors[i].id));
-            if (comerr) {
-                return next(mecomerrrr);
-            }
-            let cous = [];
-            if (!courses_of_major) {
-                all_majors[i] = {
-                    id: all_majors[i].id,
-                    name: all_majors[i].name,
-                    courses: null,
-                }
-            } else {
-                for (j = 0; j < courses_of_major.length; j++) {
-                    cous[j] = {
-                        course_id: courses_of_major[j].id,
-                        course_name: courses_of_major[j].name,
-                        course_credit: courses_of_major[j].credit,
-                    }
-                }
-                total_cous[i] = cous;
-                all_majors[i] = {
-                    id: all_majors[i].id,
-                    name: all_majors[i].name,
-                    courses: cous,
-                }
-            }
+        console.log(scores);
+
+        const [count_study, counterr] = await run(study_model.getCountStudyByCourseIdUserId(course_info[0].courseid, userID));
+        if (counterr) {
+            return next(counterr);
         }
-        console.log(total_schoolyears);
+        const count = count_study[0].count;
+        console.log(count);
 
         //B2: render to web
-        res.render('./layouts/study/add', {
-            title: 'Study-Add',
-            layout: './study/add',
-            total_schoolyears,
-            total_semesters,
-            all_majors,
-            total_cous,
-            courses_rot,
-            courses_chuahoc,
+        res.render('./layouts/score/detail', {
+            title: 'Score-Detail',
+            layout: './score/detail',
+            studyID,
+            course_info,
+            scores,
+            count,
         });
     }
 });
@@ -232,29 +205,20 @@ router.post('/add', async (req, res, next) => {
         console.log("Not sign in!!");
         return res.redirect('/user/signin');
     } else {
-        const userID = req.user.id;
-        const [user, usererr] = await run(user_model.getByUserID(userID));
-        if (usererr) {
-            return next(usererr);
-        }
-        //B1: get new category name from form
-        const courseID = req.body.courseid;
-        const semesterID = req.body.semesterid;
-        const schoolyearID = req.body.schoolyearid;
-        //B2: get list category
+        const studyId = req.body.studyid;
+        const scoreName = req.body.scorename;
+        const scorePercent = req.body.scorepercent;
+        const scoreNum = req.body.scorenum;
 
         //B3 : Check if catname is exists in in list category
-
-        //B4: create new entity to add to database 
-        const newStudy = {
-            user: userID,
-            course: courseID,
-            semester: semesterID,
-            schoolyear: schoolyearID,
-            qualify: 0,
+        const newScore = {
+            study: studyId,
+            name: scoreName,
+            percent: scorePercent,
+            score_num: scoreNum,
         };
 
-        const [newRow, addErr] = await run(study_model.addNewStudy(newStudy));
+        const [newRow, addErr] = await run(score_model.addNewScore(newScore));
         if (addErr) {
             console.log(addErr);
         } else {
@@ -262,162 +226,61 @@ router.post('/add', async (req, res, next) => {
         }
 
         //B5: redirect 
-        res.redirect('/study/course');
+        let redirect_link = '/score/' + studyId;
+        res.redirect(redirect_link);
     }
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-router.post('/course/edit', async (req, res, next) => {
+router.post('/delete', async (req, res, next) => {
     if (!req.user) {
         console.log("Not sign in!!");
         return res.redirect('/user/signin');
     } else {
-        const userID = req.user.id;
-        const [user, usererr] = await run(user_model.getByUserID(userID));
-        if (usererr) {
-            return next(usererr);
-        }
-
-        let schoolyear_ = parseInt(req.query.schoolyear) || 0;
-        let semester_ = parseInt(req.query.semester) || 0;
-        console.log(schoolyear_);
-        console.log(semester_);
-
         //B1: get data from form 
-        const cousreID = parseInt(req.body.courseid);
-        console.log(req.body.courseid);
-        //B2:Create new entity by majorID
+        const scoreId = parseInt(req.body.scoreid);
+        const studyId = parseInt(req.body.studyid);
 
-        const newCourse = {
-            id: cousreID,
-            major: req.body.majorid,
-            name: req.body.coursename,
-            credit: req.body.credit,
-        }
-        console.log(newCourse);
+        //B2: check if category emty
+        const [id, delErr] = await run(score_model.delScore(scoreId));
+        // if (delErr)
+        // {
+        //     console.log("err");
+        // }
+        // else
+        // {
+        console.log(id);
+        //}
+        //B : redirect
+        let redirect_link = '/score/' + studyId;
+        res.redirect(redirect_link);
+    }
+});
+router.post('/edit', async (req, res, next) => {
+    if (!req.user) {
+        console.log("Not sign in!!");
+        return res.redirect('/user/signin');
+    } else {
+        const studyId = parseInt(req.body.studyid);
+        const scoreId = parseInt(req.body.scoreid);
+        const newScore = {
+            id: scoreId,
+            study: studyId,
+            name: req.body.scorename,
+            score_num: parseInt(req.body.scorenum),
+            percent: parseInt(req.body.scorepercent),
+        };
         //B3: update new Category Name 
-        const [newRow, upErr] = await run(course_model.updateNewCourseName(newCourse));
-
+        const [newRow, upErr] = await run(score_model.updateNewScore(newScore));
+        if (upErr) {
+            return next(upErr);
+        }
         console.log(newRow);
 
 
         //B4: redirect 
-        return res.redirect('/admin/course');
-    }
-});
-
-router.post('/course/delete', async (req, res, next) => {
-    if (!req.user) {
-        console.log("Not sign in!!");
-        return res.redirect('/user/signin');
-    } else if (req.user.permission != 1) {
-        console.log("fail");
-        return res.render('error/errorPage', {
-            layout: false,
-            errcode: 'Opps!!',
-            errMess: `sorry. You don't have permission to use this feture`,
-            title: 'Sorry',
-        });
-    } else {
-        //B1: get data from form 
-        const courseID = parseInt(req.body.courseid);
-
-        //B2: check if category emty
-        const [users, err] = await run(study_model.getAllUserByCourseId(courseID));
-        console.log(users);
-
-        if (err) {
-            return next(err);
-        }
-        if (!users) {
-            const [id, delErr] = await run(course_model.delCourse(courseID));
-            // if (delErr)
-            // {
-            //     console.log("err");
-            // }
-            // else
-            // {
-            console.log(id);
-            //}
-        } else {
-            //Category have sub categyry can not delete
-            console.log("Course have user can not delete ");
-        }
-        //B : redirect
-        return res.redirect('/admin/course');
-    }
-});
-
-router.post('/course/add', async (req, res, next) => {
-    if (!req.user) {
-        console.log("Not sign in!!");
-        return res.redirect('/user/signin');
-    } else if (req.user.permission != 1) {
-        console.log("fail");
-        return res.render('error/errorPage', {
-            layout: false,
-            errcode: 'Opps!!',
-            errMess: `sorry. You don't have permission to use this feture`,
-            title: 'Sorry',
-        });
-    } else {
-        //B1: get new category name from form
-        const courseName = req.body.coursename;
-
-        console.log(courseName);
-        //B2: get list category
-        const [courses, err] = await run(course_model.allCourse());
-        if (err) {
-            return next(err);
-        }
-
-        //B3 : Check if catname is exists in in list category
-        let isExists = false;
-        for (eachCourse of courses) {
-            if (courseName === eachCourse.name) {
-                isExists = true;
-                break;
-            }
-        }
-
-        //B4: create new entity to add to database 
-        if (!isExists) {
-            const newCoursee = {
-                name: courseName,
-                major: req.body.majorid,
-                credit: req.body.credit,
-            };
-
-            const [newRow, addErr] = await run(course_model.addNewCourse(newCoursee));
-            if (addErr) {
-                console.log(err);
-            } else {
-                console.log(newRow);
-            }
-        }
-
-        //B5: redirect 
-        res.redirect('/admin/course');
+        let redirect_link = '/score/' + studyId;
+        res.redirect(redirect_link);
     }
 });
 
