@@ -7,13 +7,36 @@
 
 <body>
   {{>import/navbar}}
-  <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
-    <div class="col-md-5 p-lg-5 mx-auto my-5">
-      <h1 class="display-2 font-weight-light text-dark animated bounceInDown">Welcome</h1>
-      <h4 class="font-weight-bold text-dark animated flipInX delay-1s">Chào mừng bạn đến với website Quản lý học tập</h4>
+  <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light"
+    style="background-image:url('/images/main_picture.jpg')">
+    <div style="background-color: rgba(255,255,255,0.5);">
+      <div class="col-md-5 p-lg-5 mx-auto my-5">
+        <h1 class="display-2 font-weight-light text-dark animated bounceInDown">Welcome</h1>
+        <p class="h3 font-weight-bold text-dark animated flipInX delay-1s">Chào mừng bạn đến với website Quản lý học tập</p>
+      </div>
+      <div class="product-device-left shadow-sm d-none d-md-block"></div>
     </div>
-    <div class="product-device shadow-sm d-none d-md-block"></div>
-    <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+  </div>
+
+
+
+  <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3 animated fadeInUp">
+    <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+      <div class="my-3 py-3">
+        <h2 class="display-5">Quản lý Deadline</h2>
+        <p class="lead">Bạn có thể thêm, xóa, sửa các deadline theo từng môn học</p>
+        <a class="btn-floating btn-lg purple-gradient" href="/deadline">Deadline</a>
+      </div>
+      <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+    </div>
+    <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+      <div class="my-3 py-3">
+        <h2 class="display-5">Quản lý ghi chú</h2>
+        <p class="lead">Bạn có thể thêm, xóa, sửa các ghi chú theo các môn học</p>
+        <a class="btn-floating btn-lg purple-gradient" href="/note">Ghi chú</a>
+      </div>
+      <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+    </div>
   </div>
 
   <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3 animated fadeInUp">
@@ -21,7 +44,7 @@
       <div class="my-3 py-3">
         <h2 class="display-5">Quản lý học phần</h2>
         <p class="lead">Bạn có thể thêm, xóa, sửa các học phần môn học vào học kì</p>
-        <a class="btn-floating btn-lg purple-gradient" href="/study/course ">Quản lý học phần</a>
+        <a class="btn-floating btn-lg purple-gradient" href="/study/course">Quản lý học phần</a>
       </div>
       <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
     </div>
@@ -64,6 +87,8 @@
       <div class="col-6 col-md">
         <h5>Tính năng chính</h5>
         <ul class="list-unstyled text-small">
+          <li><a class="link-secondary" href="/deadline">Deadline</a></li>
+          <li><a class="link-secondary" href="/note">Ghi chú</a></li>
           <li><a class="link-secondary" href="/study/course">Quản lý học phần</a></li>
           <li><a class="link-secondary" href="/score">Quản lý điểm học tập</a></li>
           <li><a class="link-secondary" href="/graduate">Chương trình đào tạo</a></li>
