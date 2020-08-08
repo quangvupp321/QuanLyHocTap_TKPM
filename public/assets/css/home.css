@@ -8,15 +8,15 @@ body {
   padding: 0;
   font-family: sans-serif;
   background: #34495e;
-  color: white;
 }
 
 body a {
-  color: white;
+  color: #333333;
 }
 
 body a:hover {
-  color: white;
+  color: #a714a2;
+  text-decoration: none;
 }
 
 #sidebar-wrapper {

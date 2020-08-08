@@ -1,0 +1,31 @@
+<div class="col-lg-3 mt-2">
+    <div class="card text-left p-2">
+        <div class="card-view ">
+            <img class="card-img-top" src="images/notebook.png" alt="" style="margin: 0 auto;">
+            <div class="seemore" style="justify-content: center;">
+                <div class=""><a href="/note/{{id}}/id">Detail</a></div>
+            </div>
+        </div>
+        <div class="card-body">
+            <h4 class="card-title"><a href="/note/{{id}}/id" style="text-overflow: ellipsis; width: 300px">
+                    {{ title }} </a></h4>
+            <div class="card-body text-secondary">
+                <p class="card-text" style="text-overflow: ellipsis; width: 200px">Tag: {{tag}}</p>
+                <div class="card-text border border-info p-2"
+                    style="height: 100px; width: 200px; text-overflow: ellipsis; overflow: hidden; font-size: 1rem;">
+                    <h5 class="text-dark">
+                        {{{content}}}
+                    </h5>
+                </div>
+            </div>
+            <form method="POST" action="/note/delete" id="hiddenForm{{id}}">
+                <input type="hidden" name="noteid" id="noteid" value="{{id}}">
+                <div class="float-right mt-5">
+                    <button type="button" class="btn btn-danger" onclick="deleteNote({{id}})">
+                        DELETE
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

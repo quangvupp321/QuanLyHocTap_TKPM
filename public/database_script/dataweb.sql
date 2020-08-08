@@ -53,7 +53,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `note` WRITE;
 /*!40000 ALTER TABLE `note` DISABLE KEYS */;
-INSERT INTO `note` VALUES (1,1,'first','TKPM','first note'),(2,2,'second','QLYCPM','second note'),(3,3,'third','Java','làm java chat '),(4,4,'abcsd','Web','làm web với JS');
+INSERT INTO `note` VALUES (1,10000,'thi cuoi ki','TKPM','<h2>The three greatest things you learn from traveling</h2><p>Like all the great things on earth traveling teaches us by example. Here are some of the most precious lessons I’ve learned over the years of traveling.</p><h3>Appreciation of diversity</h3><p>Getting used to an entirely different culture can be challenging. While it’s also nice to learn about cultures online or from books, nothing comes close to experiencing <a href="https://en.wikipedia.org/wiki/Cultural_diversity">cultural diversity</a> in person. You learn to appreciate each and every single one of the differences while you become more culturally fluid.</p><h3>Confidence</h3><p>Going to a new place can be quite terrifying. While change and uncertainty makes us scared, traveling teaches us how ridiculous it is to be afraid of something before it happens. The moment you face your fear and see there was nothing to be afraid of, is the moment you discover bliss.</p>'),(2,10000,'bai tap','java','bai tap: yeu cau lam ro rang'),(3,10006,'third','Java','làm java chat '),(4,10006,'abcsd','Web','làm web với JS');
 /*!40000 ALTER TABLE `note` ENABLE KEYS */;
 UNLOCK TABLES;
 

@@ -85,9 +85,9 @@ DROP TABLE IF EXISTS `note`;
 CREATE TABLE `note` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user` int DEFAULT NULL,
-  `title` varchar(45) DEFAULT NULL,
-  `tag` varchar(45) DEFAULT NULL,
-  `content` varchar(500) DEFAULT NULL,
+  `title` varchar(45) DEFAULT '',
+  `tag` varchar(45) DEFAULT '',
+  `content` TEXT(999999) DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {{>import/head}}
+</head>
+
+<body>
+    {{>import/navbar}}
+    <div class="d-flex" id="wrapper">
+
+        <div id="page-content-wrapper">
+            <div class="mx-5 shadow p-3 rounded my-3 p-5 mb-5">
+                <h1 class="text-center text-primary">List of notes</h1>
+                <div class="float-left">
+                    <a href="/note/add">
+                        <button class="btn btn-success">ADD</button>
+                    </a>
+                </div>
+                <br>
+                <div>
+                    <div class="row text-black-50">
+                        {{#each user_notes}}
+                        {{> import/note_card}}
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function deleteNote(noteID) {
+            let form = `#hiddenForm${noteID}`;
+            $(form).attr('action', '/note/delete');
+            $(form).submit();
+        }
+        function goToSemesterSchoolyear() {
+            var semester_valueSelected = $('#semester').find(":selected").val();
+            var schoolyear_valueSelected = $('#schoolyear').find(":selected").val();
+            if (schoolyear_valueSelected == 0) {
+                window.location.href = `?schoolyear=${schoolyear_valueSelected}&semester=${semester_valueSelected}`;
+            } else {
+                window.location.href = `?schoolyear=${schoolyear_valueSelected}&semester=${semester_valueSelected}`;
+            }
+        }
+    </script>
+    {{> import/b4_script}}
+</body>
+
+</html>
