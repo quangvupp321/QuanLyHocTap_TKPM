@@ -175,18 +175,48 @@ router.get('/:studyid', async (req, res, next) => {
         }
         console.log(course_info);
 
-        const [scores, scoerr] = await run(score_model.getScoreByStudyId(studyID));
+        const [scores_all, scoerr] = await run(score_model.getScoreByStudyId(studyID));
         if (scoerr) {
             return next(scoerr);
         }
         console.log(scores);
 
-        const [count_study, counterr] = await run(study_model.getCountStudyByCourseIdUserId(course_info[0].courseid, userID));
-        if (counterr) {
-            return next(counterr);
+        var count = 1;
+        if (course_info != null) {
+            const [count_study, counterr] = await run(study_model.getCountStudyByCourseIdUserId(course_info[0].courseid, userID));
+            if (counterr) {
+                return next(counterr);
+            }
+            count = count_study[0].count;
+        } else {
+            const newEmptyScore = {
+                study: studyID,
+                name: '',
+                percent: 0,
+                score_num: 0,
+            };
+            const [newRow, addErr] = await run(score_model.addNewScore(newEmptyScore));
+            if (addErr) {
+                console.log(addErr);
+            } else {
+                console.log(newRow);
+            }
         }
-        const count = count_study[0].count;
-        console.log(count);
+        var dtb = 0;
+        var scores = [];
+        if (scores_all != null) {
+            for (let i = 0; i < scores_all.length; i++) {
+                scores[i] = {
+                    id: scores_all[i].id,
+                    study: scores_all[i].study,
+                    name: scores_all[i].name,
+                    score_num: scores_all[i].score_num,
+                    percent: scores_all[i].percent,
+                }
+                dtb = dtb + scores_all[i].score_num * scores_all[i].percent / 100;
+            }
+        }
+        dtb = Math.round(dtb * 1000) / 1000;
 
         //B2: render to web
         res.render('./layouts/score/detail', {
@@ -196,6 +226,7 @@ router.get('/:studyid', async (req, res, next) => {
             course_info,
             scores,
             count,
+            dtb,
         });
     }
 });
@@ -272,11 +303,6 @@ router.post('/edit', async (req, res, next) => {
         };
         //B3: update new Category Name 
         const [newRow, upErr] = await run(score_model.updateNewScore(newScore));
-        if (upErr) {
-            return next(upErr);
-        }
-        console.log(newRow);
-
 
         //B4: redirect 
         let redirect_link = '/score/' + studyId;

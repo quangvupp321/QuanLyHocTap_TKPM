@@ -240,7 +240,7 @@ router.post('/add', async (req, res, next) => {
         //B1: get new category name from form
         const courseID = req.body.courseid;
         const semesterID = req.body.semesterid;
-        const schoolyearID = req.body.schoolyearid;
+        const schoolyearID = req.body.schoolyearid - 2000;
         //B2: get list category
 
         //B3 : Check if catname is exists in in list category
