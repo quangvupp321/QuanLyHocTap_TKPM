@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {{>import/head}}
+</head>
+
+<body>
+    {{>import/navbar}}
+    <div class="d-flex" id="wrapper">
+
+        <div id="page-content-wrapper">
+            <div class="mx-5 shadow p-3 rounded my-3 p-5 mb-5">
+                <h1 class="text-center text-primary">List of deadlines</h1>
+                <div class="float-left">
+                    <a href="/deadline/add">
+                        <button class="btn btn-success">ADD</button>
+                    </a>
+                </div>
+                <br>
+                <div>
+                    <div class="row text-black-50">
+                        {{#each deadlines}}
+                        {{> import/deadline_card}}
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function deleteDeadline(deadlineID) {
+            let form = `#hiddenForm${deadlineID}`;
+            $(form).attr('action', '/deadline/delete');
+            $(form).submit();
+        }
+        function checkDeadline(deadlineID) {
+            let form = `#hiddenForm_check${deadlineID}`;
+            $(form).attr('action', '/deadline/check');
+            $(form).submit();
+        }
+    </script>
+    {{> import/b4_script}}
+</body>
+
+</html>

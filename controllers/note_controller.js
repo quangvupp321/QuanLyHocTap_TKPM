@@ -116,7 +116,6 @@ router.post('/delete', async (req, res, next) => {
 
         //B2: check if category emty
         const [id, delErr] = await run(note_model.delNote(noteID));
-        console.log(id);
         //B : redirect
         return res.redirect('/note');
     }

@@ -35,34 +35,38 @@
         <div id="page-content-wrapper">
             <div class="mx-5 shadow p-3 rounded my-3 p-5 mb-5">
                 <div class="row mt-4 my-3 mx-5" id="details">
-                    {{#note_detail}}
+                    {{#deadline}}
                     <div class="col-md-3">
-                        <img width="417px" heigth="617px" class="img-fluid my-4" src="../images/notebook.png"
+                        <img width="417px" heigth="617px" class="img-fluid my-4" src="../images/clock_1.jpg"
                             alt="{{title}}">
                     </div>
 
                     <div class="col-md-9">
-                        <form method="POST" action="/note/edit" id="hiddenForm{{id}}">
-                            <input class="h1 my-3" type="text" id="notetitle" name="notetitle" value="{{title}}"
+                        <form method="POST" action="/deadline/edit" id="hiddenForm{{id}}">
+                            <input class="h1 my-3" type="text" id="deadlinetitle" name="deadlinetitle" value="{{title}}"
                                 maxlength="40" style="width: 500px;"><br>
-                            <label for="notetag" class="text-white">Tag: </label>
-                            <input class="h5" type="text" id="notetag" name="notetag" value="{{tag}}" maxlength="20"
-                                style="width: 200px;">
-                            <div class="my-3 h3 text-white">Content</div>
+                            <label for="deadlinetag" class="text-white">Tag: </label>
+                            <input class="h5" type="text" id="deadlinetag" name="deadlinetag" value="{{tag}}"
+                                maxlength="20" style="width: 200px;">
+                            <br>
+                            <label for="deadlineduedate" class="text-white">Duedate: </label>
+                            <input type="datetime-local" id="deadlineduedate" name="deadlineduedate" value="{{custom_date}}">
+                            <div class="my-3 h3 text-white">Note</div>
                             <div id="editor">
-                                {{{content}}}
+                                {{{note}}}
                             </div>
-                            <input type="hidden" name="noteid" id="noteid" value="{{id}}">
-                            <input type="hidden" name="noteuser" id="noteuser" value="{{user}}">
-                            <input type="hidden" name="notecontent" id="notecontent" value="">
+                            <input type="hidden" name="deadlineid" id="deadlineid" value="{{id}}">
+                            <input type="hidden" name="deadlineuser" id="deadlineuser" value="{{user}}">
+                            <input type="hidden" name="deadlinenote" id="deadlinenote" value="">
+                            <input type="hidden" name="deadlineiscomplete" id="deadlineiscomplete" value="{{iscomplete}}">
                             <div class="float-right mt-5">
-                                <button type="button" class="btn btn-success" onclick="saveNote({{id}})">
+                                <button type="button" class="btn btn-success" onclick="saveDeadline({{id}})">
                                     SAVE
                                 </button>
-                                <button type="button" class="btn btn-danger" onclick="deleteNote({{id}})">
+                                <button type="button" class="btn btn-danger" onclick="deleteDeadline({{id}})">
                                     DELETE
                                 </button>
-                                <a href="/note">
+                                <a href="/deadline">
                                     <button type="button" class="btn btn-warning text-white" onclick="">
                                         BACK
                                     </button>
@@ -70,7 +74,7 @@
                             </div>
                         </form>
                     </div>
-                    {{/note_detail}}
+                    {{/deadline}}
                 </div>
             </div>
         </div>
@@ -89,16 +93,16 @@
             .catch(err => {
                 console.error(err.stack);
             });
-        function deleteNote(noteID) {
+        function deleteDeadline(noteID) {
             let form = `#hiddenForm${noteID}`;
-            $(form).attr('action', '/note/delete');
+            $(form).attr('action', '/deadline/delete');
             $(form).submit();
         }
-        function saveNote(noteID) {
-            let noteContent = `#notecontent`;
+        function saveDeadline(noteID) {
+            let noteContent = `#deadlinenote`;
             $(noteContent).val(myEditor.getData());
             let form = `#hiddenForm${noteID}`;
-            $(form).attr('action', '/note/edit');
+            $(form).attr('action', '/deadline/edit');
             $(form).submit();
         }
     </script>

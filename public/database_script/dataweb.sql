@@ -33,7 +33,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `deadline` WRITE;
 /*!40000 ALTER TABLE `deadline` DISABLE KEYS */;
-INSERT INTO `deadline` VALUES (1,1,'Làm database','TKPM','2020-07-12 00:00:00',NULL,0),(2,1,'Java chat','Java','2020-07-13 00:00:00','note note',0),(3,2,'Thiết kế ứng dụng web ','TKPM','2020-07-14 00:00:00',NULL,0),(4,2,'Vẽ usecase','PTQLYCPM','2020-07-14 00:00:00',NULL,1),(5,2,'Viết ứng dụng bằng C++','NMLT','2020-07-15 00:00:00','C++ app',1);
+INSERT INTO `deadline` VALUES (1,10000,'Làm database','TKPM','2020-07-12 00:00:00','<ul><li>Bài 1/trang 2</li><li>Bài 2/trang 7</li><li>Bài 3/trang 9</li></ul>',0),(2,10000,'Java chat','Java','2020-07-13 00:00:00','note note',0),(3,10006,'Thiết kế ứng dụng web ','TKPM','2020-07-14 00:00:00',NULL,0),(4,10006,'Vẽ usecase','PTQLYCPM','2020-07-14 00:00:00',NULL,1),(5,10006,'Viết ứng dụng bằng C++','NMLT','2020-07-15 00:00:00','C++ app',1),(6,10000,'Thiet ke phan mem','tkpm','2020-09-03 00:00:00','<ul><li>A</li><li>B</li><li>C</li></ul>',0),(7,10000,'Viet bao cao','tkpm','2020-09-02 00:00:00','các báo cáo từ 1-8',1);
 /*!40000 ALTER TABLE `deadline` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -107,4 +107,3 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2020-07-12 10:41:27
-course

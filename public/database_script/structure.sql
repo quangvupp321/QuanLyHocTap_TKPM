@@ -3,6 +3,7 @@
 -- Host: localhost    Database: qlht
 -- ------------------------------------------------------
 -- Server version	8.0.20
+UNLOCK TABLES;
 DROP DATABASE `qlht`;
 CREATE SCHEMA IF NOT EXISTS `qlht` DEFAULT CHARACTER SET utf8 ;
 USE `qlht` ;
@@ -54,9 +55,9 @@ CREATE TABLE `deadline` (
   `user` int DEFAULT NULL,
   `title` varchar(45) DEFAULT NULL,
   `tag` varchar(45) NOT NULL,
-  `duedate` datetime NOT NULL,
-  `note` varchar(45) DEFAULT NULL,
-  `iscomplete` tinyint DEFAULT NULL,
+  `duedate` datetime DEFAULT CURRENT_TIMESTAMP,
+  `note` TEXT(999999) DEFAULT '',
+  `iscomplete` tinyint DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;

@@ -1,0 +1,88 @@
+<div class="col-lg-3 mt-2">
+    <div class="card text-left
+    {{#if missed}}border-danger{{else}} {{#if iscomplete}}border-success{{else}}border-primary{{/if}} {{/if}}">
+        <div class="card-header">
+            <h4 class="card-title"><a href="/deadline/{{id}}/id" style="text-overflow: ellipsis; width: 300px">
+                    {{ title }} </a></h4>
+            <p class="card-text" style="text-overflow: ellipsis; width: 200px">Tag: {{tag}}</p>
+        </div>
+        <div class="card-body">
+
+            <div class="text-dark">
+                {{#if missed}}
+                <div class="text-danger">
+                    <h5>
+                        Trễ hạn:
+                    </h5>
+                    {{else}}
+                    {{#if iscomplete}}
+                    <div class="text-success">
+                        <h5>
+                            Thời gian còn lại:
+                        </h5>
+                        {{else}}
+                        <div class="text-primary">
+                            <h5>
+                                Thời gian còn lại:
+                            </h5>
+                            {{/if}}
+                            {{/if}}
+                            <h4>
+                                <div class="font-weight-bold">{{remaintime}}</div>
+                            </h4>
+                        </div>
+                        <div class="card-text border border-info p-2"
+                            style="height: 100px; width: 200px; text-overflow: ellipsis; overflow: hidden; font-size: 1rem;">
+
+                            <h5 class="text-dark">
+                                {{{note}}}
+                            </h5>
+                        </div>
+                        <div class="mt-2">
+                            <form method="POST" action="/deadline/check" id="hiddenForm_check{{id}}">
+                                <input type="hidden" name="deadlineid" id="deadlineid" value="{{id}}">
+                                <input type="hidden" name="deadlineuser" id="deadlineuser" value="{{user}}">
+                                <input type="hidden" name="deadlinetitle" id="deadlinetitle" value="{{title}}">
+                                <input type="hidden" name="deadlinetag" id="deadlinetag" value="{{tag}}">
+                                <input type="hidden" name="deadlineduedate" id="deadlineduedate" value="{{duedate}}">
+                                <input type="hidden" name="deadlinenote" id="deadlinenote" value="{{note}}">
+                                <input type="hidden" name="deadlineiscomplete" id="deadlineiscomplete"
+                                    value="{{iscomplete}}">
+                                <label class="indigo-text font-weight-bold">
+                                    CHECK:
+                                </label>
+                                {{#if missed}}
+                                <button type="button" class="btn btn-danger" disabled>
+                                    <i class="far fa-times-square"></i>
+                                </button>
+                                {{else}}
+                                {{#if iscomplete}}
+                                <button type="button" class="btn btn-success" onclick="checkDeadline({{id}})">
+                                    <i class="far fa-check-square"></i>
+                                </button>
+                                {{else}}
+                                <button type="button" class="btn btn-light" onclick="checkDeadline({{id}})">
+                                    <i class="far fa-square"></i>
+                                </button>
+                                {{/if}}
+                                {{/if}}
+                            </form>
+                        </div>
+                        <a href="/deadline/{{id}}/id" class="float-left">
+                            <button type="button" class="btn btn-info" onclick="">
+                                EDIT
+                            </button>
+                        </a>
+                        <div class="float-right mt-2">
+
+                            <form method="POST" action="/deadline/delete" id="hiddenForm{{id}}">
+                                <input type="hidden" name="deadlineid" id="deadlineid" value="{{id}}">
+                                <button type="button" class="btn btn-danger" onclick="deleteDeadline({{id}})">
+                                    DELETE
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

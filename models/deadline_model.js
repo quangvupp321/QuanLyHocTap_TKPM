@@ -1,13 +1,31 @@
 const db = require('../utils/db');
 const run = db.errorHandle;
 const tbName = 'deadline';
+const tbCourse = 'course';
+const tbMajor = 'major';
+const tbUser = 'user';
+const tbSchoolyear = 'schoolyear';
+const tbStudy = 'study';
+
+const relativeTb = 'ordersdetails';
+const NameFields = 'number_of_bidded';
+const subcatetable = 'subcategory';
+const usertable = 'user_';
+const idField = 'id';
 
 module.exports = {
-    //get all category
-    getDeadlineByDeadlineID: async deadlineID =>{
-        let sql = 'SELECT * FROM ?? WHERE ?? = ?';
-        const params = [tbName, 'id', deadlineID];   
-        sql = db.mysql.format(sql, params);
+    allDeadline: async () => {
+        const sql = `SELECT * FROM ${tbName}`;
+        const [rows,err] = await run(db.load(sql));
+        if (err)
+        {
+            throw err;
+        }
+        return rows;
+    },
+
+    getDeadlineById: async id => {
+        const sql = `SELECT * FROM ${tbName} WHERE id=${id}`;
         const [rows,err] = await run(db.load(sql));
         if (err)
         {
@@ -23,10 +41,9 @@ module.exports = {
         }
     },
 
-    getDeadlineByuserID: async deadlineID =>{
-        let sql = 'SELECT * FROM ?? WHERE ?? = ?';
-        const params = [tbName, 'user', deadlineID];   
-        sql = db.mysql.format(sql, params);
+    getDeadlineCustomDateById: async id => {
+        const sql = `SELECT *, DATE_FORMAT(duedate, '%Y-%m-%dT%H:%i') AS custom_date 
+                FROM ${tbName} WHERE id=${id}`;
         const [rows,err] = await run(db.load(sql));
         if (err)
         {
@@ -34,7 +51,7 @@ module.exports = {
         }
         if (rows.length >0)
         {
-            return rows;
+            return rows[0];
         }
         else
         {
@@ -42,7 +59,61 @@ module.exports = {
         }
     },
 
-    updateNewCourseName: async entity =>
+    getDeadlineByUserId: async UserID =>{
+        const sql = `SELECT *
+                FROM ${tbName}
+                WHERE user = ${UserID}`;
+        const [rows,err] = await run(db.load(sql));
+        if (err)
+        {
+            throw err;
+        } 
+        if (rows.length > 0)
+        {
+            return rows;
+        }
+        return null;
+    },
+
+    checkDeadlineByDeadlineIdUserId: async (DeadlineID, UserId) => {
+        const sql = `SELECT *
+                    FROM ${tbName} as dl
+                    WHERE dl.id = ${DeadlineID} and dl.user = ${UserId}`;
+        const [rows, err] = await run(db.load(sql));
+        if (err) {
+            throw err;
+        }
+        if (rows.length > 0) {
+            return rows;
+        }
+        return null;
+    },
+
+    addNewDeadline: async entity =>
+    {
+        const [newRow,err] = await run(db.add(tbName,entity));
+        if (err)
+        {
+            throw err;
+        }
+        else{
+            return newRow;
+        }
+    },
+
+    addNewDeadlineWithUserID: async (userID) =>
+    {
+        const sql = `INSERT INTO ${tbName} (user)
+                    VALUES (${userID})`;
+        const [newRow, err] = await run(db.load(sql));
+        if (err) {
+            throw err;
+        } else {
+            return newRow;
+        }
+    },
+    
+    updateNewDeadline: async entity =>
     {
         const [nR,err] = await run(db.update(tbName,'id',entity));
         if (err)
@@ -55,8 +126,8 @@ module.exports = {
         }
     },     
 
-    delCourse: async courseID =>{
-        const [id,err] = await run(db.del(tbName,'id',courseID));
+    delDeadline: async deadlineID =>{
+        const [id,err] = await run(db.del(tbName,'id',deadlineID));
         if (err)
         {
             throw err;
@@ -67,15 +138,4 @@ module.exports = {
         }
     },
 
-    addNewCourse: async entity =>
-    {
-        const [newRow,err] = await run(db.add(tbName,entity));
-        if (err)
-        {
-            throw err;
-        }
-        else{
-            return newRow;
-        }
-    },
 };
