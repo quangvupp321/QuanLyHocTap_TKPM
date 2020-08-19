@@ -98,7 +98,7 @@ router.get('', async (req, res, next) => {
                 credit: 38,
             }
         }
-        
+        console.log(year_);
 
         res.render('./layouts/graduate', {
             title: 'Chương trình đào tạo',

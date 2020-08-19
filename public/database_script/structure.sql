@@ -4,7 +4,7 @@
 -- ------------------------------------------------------
 -- Server version	8.0.20
 UNLOCK TABLES;
-DROP DATABASE `qlht`;
+DROP SCHEMA IF EXISTS `qlht`;
 CREATE SCHEMA IF NOT EXISTS `qlht` DEFAULT CHARACTER SET utf8 ;
 USE `qlht` ;
 
@@ -34,7 +34,7 @@ DROP TABLE IF EXISTS `course`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `course` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
+  `name` varchar(45) DEFAULT 'EMPTY_COURSE',
   `major` int DEFAULT NULL,
   `credit` int DEFAULT 0,
   PRIMARY KEY (`id`),
@@ -53,10 +53,10 @@ DROP TABLE IF EXISTS `deadline`;
 CREATE TABLE `deadline` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user` int DEFAULT NULL,
-  `title` varchar(45) DEFAULT NULL,
-  `tag` varchar(45) NOT NULL,
+  `title` varchar(45) DEFAULT 'EMPTY_TITLE',
+  `tag` varchar(45) DEFAULT 'EMPTY_TAG',
   `duedate` datetime DEFAULT CURRENT_TIMESTAMP,
-  `note` TEXT(999999) DEFAULT '',
+  `note` TEXT(999999),
   `iscomplete` tinyint DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -71,7 +71,7 @@ DROP TABLE IF EXISTS `major`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `major` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
+  `name` varchar(45) DEFAULT 'EMPTY_MAJOR',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -86,9 +86,9 @@ DROP TABLE IF EXISTS `note`;
 CREATE TABLE `note` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user` int DEFAULT NULL,
-  `title` varchar(45) DEFAULT '',
-  `tag` varchar(45) DEFAULT '',
-  `content` TEXT(999999) DEFAULT '',
+  `title` varchar(45) DEFAULT 'EMPTY_TITLE',
+  `tag` varchar(45) DEFAULT 'EMPTY_TAG',
+  `content` TEXT(999999),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -117,9 +117,9 @@ DROP TABLE IF EXISTS `score`;
 CREATE TABLE `score` (
   `id` int NOT NULL AUTO_INCREMENT,
   `study` int DEFAULT NULL,
-  `name` varchar(45) DEFAULT NULL,
-  `score_num` float DEFAULT NULL,
-  `percent` float DEFAULT NULL,
+  `name` varchar(45) DEFAULT 'EMPTY_SCORE',
+  `score_num` float DEFAULT 0,
+  `percent` float DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -135,7 +135,7 @@ CREATE TABLE `study` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user` int DEFAULT NULL,
   `course` int DEFAULT NULL,
-  `semester` int DEFAULT NULL,
+  `semester` int DEFAULT 1,
   `schoolyear` int DEFAULT NULL,
   `qualify` int DEFAULT 0,
   PRIMARY KEY (`id`)
@@ -152,12 +152,12 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int NOT NULL AUTO_INCREMENT,
   `mssv` varchar(20) NOT NULL,
-  `name` varchar(45) DEFAULT NULL,
+  `name` varchar(45) DEFAULT 'EMPTY_NAME',
   `email` varchar(45) NOT NULL,
   `password` varchar(75) NOT NULL,
   `major` int DEFAULT NULL,
-  `year` int DEFAULT NULL,
-  `permission` tinyint DEFAULT NULL,
+  `year` int DEFAULT 2016,
+  `permission` tinyint DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

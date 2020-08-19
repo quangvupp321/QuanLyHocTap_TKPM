@@ -93,7 +93,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (10000,'admin','admin','admin@gmail.com','$2b$10$ttqO.BtyfiDajFdCJM/HM.rhdX69qGxGugAHHqb75r6PKNTextv0K',0,NULL,1),(10001,'171001','Hồ Đình Minh','minh@gmail.com','123',2,2017,0),(10002,'17003','Quang Vũ','vu@gmail.com','123',2,2017,0),(10003,'18021','Nguyễn Văn A','a@gmail.com','123',0,2018,0),(10004,'19031','Trần Thị B','b@gmail.com','123',0,2019,0),(10005,'16051','Phan Văn C','c@gmail.com','123',1,2016,0),(10006,'user','user','user@gmail.com','$2b$10$ttqO.BtyfiDajFdCJM/HM.rhdX69qGxGugAHHqb75r6PKNTextv0K',2,2017,0);
+INSERT INTO `user` VALUES (10000,'admin','admin','admin@gmail.com','$2b$10$ttqO.BtyfiDajFdCJM/HM.rhdX69qGxGugAHHqb75r6PKNTextv0K',0,2016,1),(10001,'171001','Hồ Đình Minh','minh@gmail.com','123',2,2017,0),(10002,'17003','Quang Vũ','vu@gmail.com','123',2,2017,0),(10003,'18021','Nguyễn Văn A','a@gmail.com','123',0,2018,0),(10004,'19031','Trần Thị B','b@gmail.com','123',0,2019,0),(10005,'16051','Phan Văn C','c@gmail.com','123',1,2016,0),(10006,'user','user','user@gmail.com','$2b$10$ttqO.BtyfiDajFdCJM/HM.rhdX69qGxGugAHHqb75r6PKNTextv0K',2,2017,0);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
