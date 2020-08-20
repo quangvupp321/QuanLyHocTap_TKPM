@@ -163,7 +163,7 @@ router.get('/:studyid', async (req, res, next) => {
             return next(cstuerr);
         }
 
-        if (!checkStudy) {
+        if (checkStudy == null) {
             let messenge = "Môn học không thuộc user này";
             console.log(messenge);
             return res.redirect('/score/course');
@@ -189,6 +189,8 @@ router.get('/:studyid', async (req, res, next) => {
             }
             count = count_study[0].count;
         } else {
+            console.log("course_info: null");
+            /*
             const newEmptyScore = {
                 study: studyID,
                 name: '',
@@ -201,6 +203,7 @@ router.get('/:studyid', async (req, res, next) => {
             } else {
                 console.log(newRow);
             }
+            */
         }
         var dtb = 0;
         var scores = [];

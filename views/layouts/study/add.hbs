@@ -114,8 +114,8 @@
                                             </td>
                                             <td class="col-2">
                                                 <input type="hidden" name="courseid" id="courseid" value="{{id}}">
-                                                <input type="hidden" name="semesterid" id="semesterid" value="1">
-                                                <input type="hidden" name="schoolyearid" id="schoolyearid" value="2016">
+                                                <input type="hidden" name="semesterid" id="semesterid" value="2">
+                                                <input type="hidden" name="schoolyearid" id="schoolyearid" value="19">
                                                 <button type="button" class="btn btn-success"
                                                     onclick="addCourse({{id}})">
                                                     <i class="fas fa-plus"></i>
@@ -140,13 +140,21 @@
             </div>
         </div>
         <script>
+            $('#semester').on('change', function () {
+                var semester = $(`#semester`).children("option:selected").val();
+                var schoolyear = $(`#schoolyear`).children("option:selected").val();
+                $(`#semesterid`).val(semester);
+                $(`#schoolyearid`).val(schoolyear);
+            });
             function addCourse(courseID) {
                 let form = `#hiddenForm${courseID}`;
                 $(form).attr('action', '/study/add');
                 var semester = $(`#semester`).children("option:selected").val();
                 var schoolyear = $(`#schoolyear`).children("option:selected").val();
-                $(`#semesterid`).attr('value', `${semester}`);
-                $(`#schoolyearid`).attr('value', `${schoolyear}`);
+                //$(`#semesterid`).attr('value', `${semester}`);
+                //$(`#schoolyearid`).attr('value', `${schoolyear}`);
+                $(`#semesterid`).val(semester);
+                $(`#schoolyearid`).val(schoolyear);
                 $(form).submit();
             }
         </script>

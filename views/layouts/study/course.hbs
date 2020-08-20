@@ -52,11 +52,20 @@
                             <th class="col-4">Tên học phần</th>
                             <th class="col-1">Tín chỉ</th>
                             <th class="col-1">Đạt</th>
-                            <th class="col-2">Chi tiết</th>
+                            <th class="col-2">Xóa</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {{#each courses}}
+                    {{#if list_empty}}
+                </table>
+                <div>
+                    <h3 class="text-dark">
+                        TRỐNG :(
+                    </h3>
+                </div>
+                {{else}}
+                <tbody>
+                    {{#each courses}}
+                    <form method="POST" action="/score/edit" id="hiddenForm{{id}}">
                         <div class="h4">
                             <tr class="d-flex">
                                 <td class="col-1">{{id}}</td>
@@ -78,38 +87,45 @@
                                             <i class="far fa-info-circle"></i>
                                         </button>
                                     </a>
+                                    <input type="hidden" name="studyid" id="studyid" value="{{studyid}}">
+                                    <button type="button" class="btn btn-danger" onclick="deleteStudy({{id}})">
+                                        <i class="fad fa-trash-alt"></i>
+                                    </button>
                                 </td>
                             </tr>
                         </div>
-                        {{/each}}
-                        <div>
-                            <tr class="d-flex">
-                                <td class="col-1"></td>
-                                <td class="col-3"></td>
-                                <td class="col-4">
-                                    <div class="font-weight-bold text-right mx-5">Tổng</div>
-                                </td>
-                                <td class="col-1">{{courses_credit}}</td>
-                                <td class="col-1">{{qualify_count}}/{{course_count}}</td>
-                                <td class="col-2">
-                                    <a href="/study/add">
-                                        <button type="submit" class="btn btn-success">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
-                                    </a>
-                                </td>
-                            </tr>
-                        </div>
-                    </tbody>
+                    </form>
+                    {{/each}}
+                    <div>
+                        <tr class="d-flex">
+                            <td class="col-1"></td>
+                            <td class="col-3"></td>
+                            <td class="col-4">
+                                <div class="font-weight-bold text-right mx-5">Tổng</div>
+                            </td>
+                            <td class="col-1">{{courses_credit}}</td>
+                            <td class="col-1">{{qualify_count}}/{{course_count}}</td>
+                            <td class="col-2">
+                                <a href="/study/add">
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </a>
+                            </td>
+                        </tr>
+                    </div>
+                </tbody>
                 </table>
+                {{/if}}
+
                 <hr>
             </div>
         </div>
     </div>
     <script>
-        function deleteCourse(courseID) {
-            let form = `#hiddenForm${courseID}`;
-            $(form).attr('action', '/admin/course/delete');
+        function deleteStudy(studyID) {
+            let form = `#hiddenForm${studyID}`;
+            $(form).attr('action', '/study/delete');
             $(form).submit();
         }
         function goToSemesterSchoolyear() {
