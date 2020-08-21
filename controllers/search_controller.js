@@ -2,9 +2,6 @@
 const express = require('express');
 const router = express.Router();
 
-const mCat = require('../models/category_model');
-const mPro = require('../models/product_model');
-const order = require('../models/order_model');
 const extendsFunc = require('../utils/extensionFunc'), 
     run = extendsFunc.errorHandle,
     //function to convert milisecconds to date

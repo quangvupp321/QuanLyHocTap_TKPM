@@ -52,14 +52,9 @@ app.use('/user', express.static(__dirname + '/public'));
 app.use('/account', express.static(__dirname + '/public'));
 app.use('/search', express.static(__dirname + '/public'));
 app.use('/product', express.static(__dirname + '/public'));
-app.use('/category', express.static(__dirname + '/public'));
-app.use('/seller', express.static(__dirname + '/public'));
-app.use('/seller/add-descript', express.static(__dirname + '/public'));
-app.use('/category/:catid/cat/', express.static(__dirname + '/public'));
 app.use('/admin', express.static(__dirname + '/public'));
 app.use('/admin/up-level', express.static(__dirname + '/public'));
 app.use('/admin/up-level', express.static(__dirname + '/public'));
-app.use('/seller/add-descript/', express.static(__dirname + '/public'));
 app.use('/study', express.static(__dirname + '/public'));
 app.use('/graduate', express.static(__dirname + '/public'));
 app.use('/score', express.static(__dirname + '/public'));
@@ -75,12 +70,6 @@ app.use('/user', require('./controllers/user_controller'));
 app.use('/account', require('./controllers/account_controller'));
 //điều hướng về search_controller để xử lí các chức năng liên quan tới tìm kiếm và sắp xếp theo thông tin 
 app.use('/search', require('./controllers/search_controller'));
-//điều hướng về product_controller để xử lí các chức năng liên quan tới chi tiết tường sản phẩm
-app.use('/product', require('./controllers/product_controller'));
-//điều hướng về category_controller xử lí các chức năng theo danh mục sản phẩm
-app.use('/category', require('./controllers/category_controller'));
-//Điều hướng về seller_controller các chức năng phân quyền của seller
-app.use('/seller', require('./controllers/seller_controller'));
 //Điều hướng về admin_controller các chức năng phân quyền của admin
 app.use('/admin', require('./controllers/admin_controller'));
 //Điều hướng về study_controller các chức năng thêm/xóa/sửa của sinh viên

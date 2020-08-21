@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const category = require('../models/category_model');
 const account = require('../models/user_model');
 const promotion = require('../models/promote_model');
-const product = require('../models/product_model');
 
 const course_model = require('../models/course_model');
 const major_model = require('../models/major_model');
