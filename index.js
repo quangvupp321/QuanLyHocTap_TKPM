@@ -49,9 +49,9 @@ app.use((req, res, next) => {
 //static diection for resource
 app.use('/', express.static(__dirname + '/public'));
 app.use('/user', express.static(__dirname + '/public'));
-app.use('/account',express.static(__dirname + '/public'));
+app.use('/account', express.static(__dirname + '/public'));
 app.use('/search', express.static(__dirname + '/public'));
-app.use('/product',express.static(__dirname + '/public'));
+app.use('/product', express.static(__dirname + '/public'));
 app.use('/category', express.static(__dirname + '/public'));
 app.use('/seller', express.static(__dirname + '/public'));
 app.use('/seller/add-descript', express.static(__dirname + '/public'));
@@ -94,7 +94,10 @@ app.use('/note', require('./controllers/note_controller'));
 app.use('/deadline', require('./controllers/deadline_controller'));
 
 
-require('./middleWare/error')(app); 
+require('./middleWare/error')(app);
 
 
-app.listen(PORT,HOST_NAME, () => console.log(`Server IP: ${HOST_NAME} start on ${PORT}`));
+//app.listen(PORT, HOST_NAME, () => console.log(`Server IP: ${HOST_NAME} start on ${PORT}`));
+app.listen(process.env.PORT || 3000, function () {
+    console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+});
