@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title> {{title}} </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+    <link rel="stylesheet" href="../assets/css/mdb.css">
+    <link rel="stylesheet" href="../assets/css/bootstrap.css">
+
+    <link rel="stylesheet" href="../assets/css/font-awesome.css">
+
+    <link rel="stylesheet" href="../assets/css/fearture.css">
+    <link rel="stylesheet" href="../assets/css/productview.css">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/css/fileinput.min.css" media="all"
+        rel="stylesheet" type="text/css" />
+    <!-- if using RTL (Right-To-Left) orientation, load the RTL CSS file after fileinput.css by uncommenting below -->
+    <!-- link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/css/fileinput-rtl.min.css" media="all" rel="stylesheet" type="text/css" /-->
+    <!-- the font awesome icon library if using with `fas` theme (or Bootstrap 4.x). Note that default icons used in the plugin are glyphicons that are bundled only with Bootstrap 3.x. -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="../assets/css/home.css">
+</head>
+
+<body>
+    {{>import/navbar}}
+    <div class="d-flex" id="wrapper">
+
+        <div id="page-content-wrapper">
+            <div class="container">
+                <a class="d-flex flex-row-reverse" href="/admin/major">
+                    <button class="btn btn-danger">BACK</button>
+                </a>
+            </div>
+            <div class="container shadow p-3 bg-white rounded my-3">
+                {{#each major}}
+                <h1 class="text-center text-primary">{{name}}</h1>
+                <table class="table table-striped">
+                    <thead>
+                        <tr class="d-flex">
+                            <th class="col-6 font-weight-bold">Số lượng học phần</th>
+                            <th class="col-6 font-weight-bold">Số lượng sinh viên</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="d-flex">
+                            <td class="col-6 font-weight-bold">{{count_course}}</td>
+                            <td class="col-6 font-weight-bold">{{count_user}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                {{/each}}
+                <div class="container shadow p-3 bg-white rounded my-3">
+                    <h1 class="text-center text-primary">Học phần</h1>
+                    <table class="table table-hover table-striped">
+                        <thead class="black white-text">
+                            <tr class="d-flex">
+                                <th class="col-2">CourseID</th>
+                                <th class="col-2">Info</th>
+                                <th class="col-5">Tên học phần</th>
+                                <th class="col-3">Tín chỉ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each courses}}
+                            <div>
+                                <tr class="d-flex">
+                                    <td class="col-2">
+                                        {{id}}
+                                    </td>
+                                    <td class="col-2">
+                                        <a href="/report/{{id}}/course">
+                                            <button class="btn btn-info">
+                                                <i class="fas fa-info"></i>
+                                            </button>
+                                        </a>
+                                    </td>
+                                    <td class="col-5">
+                                        {{name}}
+                                    </td>
+                                    <td class="col-3">
+                                        {{credit}}
+                                    </td>
+                                </tr>
+                            </div>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                    <hr>
+                </div>
+                <hr>
+                <div class="container shadow p-3 bg-white rounded my-3">
+                    <h1 class="text-center text-primary">Sinh viên</h1>
+                    <table class="table table-hover table-striped">
+                        <thead class="black white-text">
+                            <tr class="d-flex">
+                                <th class="col-2">MSSV</th>
+                                <th class="col-4">Họ và tên</th>
+                                <th class="col-3">Email</th>
+                                <th class="col-3">Khóa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each list_user}}
+                            <div>
+                                <tr class="d-flex">
+                                    <td class="col-2">
+                                        {{mssv}}
+                                    </td>
+                                    <td class="col-4">
+                                        {{name}}
+                                    </td>
+                                    <td class="col-3">
+                                        {{email}}
+                                    </td>
+                                    <td class="col-3">
+                                        {{year}}
+                                    </td>
+                                </tr>
+                            </div>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                    <hr>
+                </div>
+                <hr>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        function deleteScore(scoreID) {
+            let form = `#hiddenForm${scoreID}`;
+            $(form).attr('action', '/score/delete');
+            $(form).submit();
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="../assets/js/bootstrap.js"></script>
+    <script src="../assets/js/mdb.js"></script>
+    <script src="../assets/js/signup.js"></script>
+    <script src="../assets/js/font-awesome.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+    <!-- piexif.min.js is needed for auto orienting image files OR when restoring exif data in resized images and when you
+    wish to resize images before upload. This must be loaded before fileinput.min.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/js/plugins/piexif.min.js"
+        type="text/javascript"></script>
+    <!-- sortable.min.js is only needed if you wish to sort / rearrange files in initial preview. 
+    This must be loaded before fileinput.min.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/js/plugins/sortable.min.js"
+        type="text/javascript"></script>
+    <!-- purify.min.js is only needed if you wish to purify HTML content in your preview for 
+    HTML files. This must be loaded before fileinput.min.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/js/plugins/purify.min.js"
+        type="text/javascript"></script>
+    <!-- popper.min.js below is needed if you use bootstrap 4.x (for popover and tooltips). You can also use the bootstrap js 
+   3.3.x versions without popper.min.js. -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <!-- bootstrap.min.js below is needed if you wish to zoom and preview file content in a detail modal
+    dialog. bootstrap 4.x is supported. You can also use the bootstrap js 3.3.x versions. -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+    <!-- the main fileinput plugin file -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/js/fileinput.min.js"></script>
+    <!-- following theme script is needed to use the Font Awesome 5.x theme (`fas`) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/themes/fas/theme.min.js"></script>
+</body>
+
+</html>

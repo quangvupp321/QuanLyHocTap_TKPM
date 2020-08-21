@@ -46,6 +46,7 @@ router.get('/course', async (req, res, next) => {
         });
     }
 });
+
 router.post('/course/edit', async (req, res, next) => {
     if (!req.user) {
         console.log("Not sign in!!");

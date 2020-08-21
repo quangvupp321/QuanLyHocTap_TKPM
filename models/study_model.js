@@ -72,6 +72,38 @@ module.exports = {
         return null;
     },
 
+    getCountUserByCourseid: async courseid =>{
+        const sql = `SELECT COUNT(DISTINCT user) as count
+                FROM ${tbName}
+                WHERE course = ${courseid}`;
+        const [rows,err] = await run(db.load(sql));
+        if (err)
+        {
+            throw err;
+        } 
+        if (rows.length > 0)
+        {
+            return rows[0];
+        }
+        return null;
+    },
+
+    getUsesInfoByCourseid: async courseid =>{
+        const sql = `SELECT DISTINCT u.*
+                FROM ${tbName} as stu, ${tbUser} as u
+                WHERE course = ${courseid} and stu.user = u.id`;
+        const [rows,err] = await run(db.load(sql));
+        if (err)
+        {
+            throw err;
+        } 
+        if (rows.length > 0)
+        {
+            return rows;
+        }
+        return null;
+    },
+
     checkStudyByStudyIdUserId: async (StudyId, UserId) => {
         const sql = `SELECT *
                     FROM ${tbName} as stu

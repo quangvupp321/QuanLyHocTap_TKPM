@@ -121,6 +121,44 @@ module.exports = {
             throw err;
         }
         return rows;
-    }
+    },
 
+    
+    getUserCountByMajorId: async majorID =>{
+        let sql = 'SELECT COUNT(*) AS count FROM ?? WHERE ?? = ?';
+        const params = [tbName, 'major', majorID];   
+        sql = db.mysql.format(sql, params);
+        const [rows,err] = await run(db.load(sql));
+        if (err)
+        {
+            throw err;
+        }
+        if (rows.length >0)
+        {
+            return rows[0];
+        }
+        else
+        {
+            return null;
+        }
+    },
+
+    getUserByMajorId: async majorID =>{
+        let sql = 'SELECT * FROM ?? WHERE ?? = ?';
+        const params = [tbName, 'major', majorID];   
+        sql = db.mysql.format(sql, params);
+        const [rows,err] = await run(db.load(sql));
+        if (err)
+        {
+            throw err;
+        }
+        if (rows.length >0)
+        {
+            return rows;
+        }
+        else
+        {
+            return null;
+        }
+    },
 };

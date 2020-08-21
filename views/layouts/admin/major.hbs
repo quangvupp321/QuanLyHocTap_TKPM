@@ -11,7 +11,11 @@
 
         <div id="page-content-wrapper">
             {{!-- Ảnh, tên, giá, tg kết thúc --}}
-            <h1 class="container text-center mt-5">Customize</h1>
+            <div class="container">
+                <a class="d-flex flex-row-reverse" href="/account/profile">
+                    <button class="btn btn-danger">BACK</button>
+                </a>
+            </div>
             <div class="container shadow p-3 bg-white rounded my-3">
                 <h1 class="text-center text-primary">Chuyên ngành</h1>
                 <table class="table table-hover table-striped">
@@ -27,7 +31,14 @@
                         {{#ifCond id 0}}
                         <div>
                             <tr class="d-flex">
-                                <td class="col-3">{{id}}</td>
+                                <td class="col-3">
+                                    {{id}}
+                                    <a href="/report/{{id}}/major">
+                                        <button class="btn btn-info">
+                                            <i class="fas fa-info"></i>
+                                        </button>
+                                    </a>
+                                </td>
                                 <form method="POST" action="/admin/major/edit" id="hiddenForm{{id}}">
                                     <td class="col-6">
                                         <div class="form-group">
@@ -44,7 +55,8 @@
                                             <i class="fas fa-edit"></i>
                                         </button>
 
-                                        <button type="button" class="btn btn-danger" onclick="deleteMajor({{id}})" style="visibility: hidden;">
+                                        <button type="button" class="btn btn-danger" onclick="deleteMajor({{id}})"
+                                            style="visibility: hidden;">
                                             <i class="fad fa-trash-alt"></i>
                                         </button>
 
@@ -55,7 +67,14 @@
                         {{else}}
                         <div>
                             <tr class="d-flex">
-                                <td class="col-3">{{id}}</td>
+                                <td class="col-3">
+                                    {{id}}
+                                    <a href="/report/{{id}}/major">
+                                        <button class="btn btn-info">
+                                            <i class="fas fa-info"></i>
+                                        </button>
+                                    </a>
+                                </td>
                                 <form method="POST" action="/admin/major/edit" id="hiddenForm{{id}}">
                                     <td class="col-6">
                                         <div class="form-group">

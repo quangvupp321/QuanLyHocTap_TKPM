@@ -73,4 +73,41 @@ module.exports = {
             return newRow;
         }
     },
+
+    getCountCourseByMajorId: async majorID =>{
+        let sql = 'SELECT COUNT(*) AS count FROM ?? WHERE ?? = ?';
+        const params = [tbName, 'major', majorID];   
+        sql = db.mysql.format(sql, params);
+        const [rows,err] = await run(db.load(sql));
+        if (err)
+        {
+            throw err;
+        }
+        if (rows.length >0)
+        {
+            return rows[0];
+        }
+        else
+        {
+            return null;
+        }
+    },
+
+    getMajorByCourseID: async courseID =>{
+        const sql = `SELECT maj.name as majorname FROM ${tbMajor} as maj, ${tbName} as cou WHERE cou.id = ${courseID} and cou.major = maj.id`;
+        const [rows,err] = await run(db.load(sql));
+        if (err)
+        {
+            throw err;
+        }
+        if (rows.length >0)
+        {
+            return rows[0];
+        }
+        else
+        {
+            return null;
+        }
+    },
+    
 };

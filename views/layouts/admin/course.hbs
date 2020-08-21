@@ -10,14 +10,19 @@
     <div class="d-flex" id="wrapper">
 
         <div id="page-content-wrapper">
-            <h1 class="container text-center mt-5">Customize</h1>
+            <div class="container">
+                <a class="d-flex flex-row-reverse" href="/account/profile">
+                    <button class="btn btn-danger">BACK</button>
+                </a>
+            </div>
             <div class="container shadow p-3 bg-white rounded my-3">
                 <h1 class="text-center text-primary">Học phần</h1>
                 <table class="table table-hover table-striped">
                     <thead class="black white-text">
                         <tr class="d-flex">
                             <th class="col-1">CourseID</th>
-                            <th class="col-2">MajorID</th>
+                            <th class="col-1">Info</th>
+                            <th class="col-1">MajorID</th>
                             <th class="col-4">Tên học phần</th>
                             <th class="col-2">Tín chỉ</th>
                             <th class="col-3">Chỉnh sửa</th>
@@ -27,13 +32,22 @@
                         {{#each courses}}
                         <div>
                             <tr class="d-flex">
-                                <td class="col-1">{{id}}</td>
+                                <td class="col-1">
+                                    {{id}}
+                                </td>
+                                <td class="col-1">
+                                    <a href="/report/{{id}}/course">
+                                        <button class="btn btn-info">
+                                            <i class="fas fa-info"></i>
+                                        </button>
+                                    </a>
+                                </td>
                                 <form method="POST" action="/admin/course/edit" id="hiddenForm{{id}}">
-                                    <td class="col-2">
+                                    <td class="col-1">
                                         <div class="form-group">
                                             <div class="input-wrap">
-                                                <input type="number" name="majorid" class="form-control"
-                                                    id="majorid" value="{{major}}" placeholder="MajorID">
+                                                <input type="number" name="majorid" class="form-control" id="majorid"
+                                                    value="{{major}}" placeholder="MajorID">
                                             </div>
                                         </div>
                                     </td>
@@ -48,8 +62,8 @@
                                     <td class="col-2">
                                         <div class="form-group">
                                             <div class="input-wrap">
-                                                <input type="number" name="credit" class="form-control"
-                                                    id="credit" value="{{credit}}" placeholder="credit">
+                                                <input type="number" name="credit" class="form-control" id="credit"
+                                                    value="{{credit}}" placeholder="credit">
                                             </div>
                                         </div>
                                     </td>
@@ -61,8 +75,7 @@
                                                 <i class="fas fa-edit"></i>
                                             </button>
                                         </a>
-                                        <button type="button" class="btn btn-danger"
-                                            onclick="deleteCourse({{id}})">
+                                        <button type="button" class="btn btn-danger" onclick="deleteCourse({{id}})">
                                             <i class="fad fa-trash-alt"></i>
                                         </button>
 
@@ -78,8 +91,8 @@
                                     <td class="col-2">
                                         <div class="form-group">
                                             <div class="input-wrap">
-                                                <input type="number" name="majorid" class="form-control"
-                                                    id="majorid" value="" placeholder="MajorID">
+                                                <input type="number" name="majorid" class="form-control" id="majorid"
+                                                    value="" placeholder="MajorID">
                                             </div>
                                         </div>
                                     </td>
@@ -95,8 +108,8 @@
                                     <td class="col-2">
                                         <div class="form-group">
                                             <div class="input-wrap">
-                                                <input type="number" name="credit" class="form-control"
-                                                    id="credit" value="" placeholder="credit">
+                                                <input type="number" name="credit" class="form-control" id="credit"
+                                                    value="" placeholder="credit">
                                             </div>
                                         </div>
                                     </td>

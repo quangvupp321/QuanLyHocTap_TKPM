@@ -65,6 +65,7 @@ app.use('/graduate', express.static(__dirname + '/public'));
 app.use('/score', express.static(__dirname + '/public'));
 app.use('/note', express.static(__dirname + '/public'));
 app.use('/deadline', express.static(__dirname + '/public'));
+app.use('/report', express.static(__dirname + '/public'));
 
 //Điều hướng về controller
 app.use('/', require('./controllers/index_controller'));
@@ -92,6 +93,8 @@ app.use('/score', require('./controllers/score_controller'));
 app.use('/note', require('./controllers/note_controller'));
 //Điều hướng về deadline_controller các chức năng của quản lý deadline
 app.use('/deadline', require('./controllers/deadline_controller'));
+//Điều hướng về report_controller các chức năng của quản lý report
+app.use('/report', require('./controllers/report_controller'));
 
 
 require('./middleWare/error')(app);
