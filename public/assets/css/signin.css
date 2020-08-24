@@ -13,6 +13,9 @@ body{
   transform: translate(-50%,-50%);
   background: #191919;
   text-align: center;
+  border-color: #34495e;
+  border-style: double;
+  border-width: 5px;
 }
 .signin_box h1{
   color: white;
