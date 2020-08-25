@@ -47,3 +47,6 @@ npm start
 
 > http://localhost:3000/
 
+## Nếu như cách trên build không thành công, vào trang web sau để trải nghiệm:
+
+> https://quanlyhoctap-tkpm.herokuapp.com/
