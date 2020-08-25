@@ -111,31 +111,28 @@ router.get('', async (req, res, next) => {
     }
 });
 
-// router.get('/:year/download/:major', async (req, res, next) => {
-//     if (!req.user) {
-//         console.log("Not sign in!!");
-//         return res.redirect('/user/signin');
-//     } else {
-//         // B1: get user ID (had been saved) from req in session
-//         const userID = req.user.id;
-//         //get data by user ID 
-//         const [user, err] = await run(account.getByUserID(userID));
-//         if (err) {
-//             return next(err);
-//         }
-//         //infor of user show in profile 
-//         //const file = `${__dirname}/upload-folder/dramaticpenguin.MOV`;
-//         const year_ = parseInt(req.params.year) || 2016;
-//         const major_ = parseInt(req.params.major) || 1;
-//         var path_ = path.resolve(".") + '/public/graduate/' + year_ + '/' + major_ + '.pdf';
-//         res.download(path_, function (err) {
-//             if (err) {
-//                 console.log(err);
-//             } else {
-//                 console.log('downloading successful');
-//             }
-//         });
-//     }
-// });
+router.get('/:year/view/:major', async (req, res, next) => {
+    if (!req.user) {
+        console.log("Not sign in!!");
+        return res.redirect('/user/signin');
+    } else {
+        // B1: get user ID (had been saved) from req in session
+        const userID = req.user.id;
+        //get data by user ID 
+        const [user, err] = await run(account.getByUserID(userID));
+        if (err) {
+            return next(err);
+        }
+        const year_ = parseInt(req.params.year) || 2016;
+        const major_ = parseInt(req.params.major) || 1;
+        const file_path = '/graduate/' + year_ + '/' + major_;
+
+        res.render('./layouts/graduate_details', {
+            title: 'Chương trình đào tạo',
+            layout: 'graduate_details',
+            file_path,
+        });
+    }
+});
 
 module.exports = router;
